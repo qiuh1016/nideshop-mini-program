@@ -1,0 +1,130 @@
+/* pages/stylist/detail/detail.wxss */
+
+page {
+  height: 100%;
+  width: 100%;
+  background: #f4f4f4;
+}
+
+.container {
+  background: #f4f4f4;
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.profile-info {
+  width: 100%;
+  /* height: 180rpx; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30rpx 30.25rpx;
+  border-bottom: 1rpx solid #AAA;
+}
+
+.profile-info .avatar {
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50%;
+}
+
+.profile-info .info {
+  flex: 1;
+  padding-left: 31.25rpx;
+}
+
+.profile-info .goodat {
+  display: block;
+  height: 45rpx;
+  line-height: 45rpx;
+  font-size: 35rpx;
+}
+
+.profile-info .desc {
+  width: 100%;
+  margin-top: 20rpx;
+  font-size: 30rpx;
+}
+
+.pickme {
+  /* position: fixed;
+  bottom: 5rpx;
+  left: 5rpx;
+  right: 5rpx; */
+  margin: 0 10rpx 40rpx 10rpx;
+  color: #fff;
+  background: #626262;
+}
+
+.style {
+  margin: 40rpx 0;
+}
+
+.style-btns {
+  display: flex;
+  padding: 0 150rpx;
+}
+
+.style-btn {
+  width: 150rpx;
+  height: 70rpx;
+  font-size: 26rpx;
+  line-height: 70rpx;
+  background: #fff;
+  border: 1px solid #333;
+  text-align: center;
+}
+
+.style-btn-active {
+  color: #fff;
+  background: #333;
+}
+
+.style-btn-first {
+  border-top-left-radius: 15rpx;
+  border-bottom-left-radius: 15rpx;
+}
+
+.style-btn-middle {
+  margin: 0 8rpx;
+}
+
+.style-btn-last {
+  border-top-right-radius: 15rpx;
+  border-bottom-right-radius: 15rpx;
+}
+
+.style-grid {
+  width: 750rpx;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  margin-top: 20rpx;
+}
+
+.style-item {
+  float: left;
+  width: 375rpx;
+  height: 375rpx;
+  /* background: red; */
+  position: relative;
+}
+
+.style-item-img {
+  position: absolute;
+  height: 300rpx;
+  width: 355rpx;
+  left: 10rpx;
+  top: 0;
+  /* background: green; */
+}
+
+.style-item-text {
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  bottom: 10rpx;
+  text-align: center;
+}

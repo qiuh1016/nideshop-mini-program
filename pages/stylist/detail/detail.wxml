@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="profile-info">
+    <image class="avatar" src="{{stylistInfo.headimgurl}}"></image>
+    <view class="info">
+      <text class="goodat">擅长：{{stylistInfo.goodat}}</text>
+      <!-- <text class="level">{{userInfo.username}}</text> -->
+    </view>
+    <text>关注TA</text>
+    <text class="desc">{{stylistInfo.desc}}</text>
+  </view>
+  <view class="style">
+    <view class="style-btns">
+      <view class="style-btn style-btn-first {{currentStyleBtnIndex == 0 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="0">简约</view>
+      <view class="style-btn style-btn-middle {{currentStyleBtnIndex == 1 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="1">休闲</view>
+      <view class="style-btn style-btn-last {{currentStyleBtnIndex == 2 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="2">轻时尚</view>
+    </view>
+    <view class="style-grid">
+      <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id">
+        <image class='style-item-img' src='{{item.imgurl}}'></image>
+        <text class='style-item-text'>{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+  <button class="pickme">帮我搭配</button>
+</view>

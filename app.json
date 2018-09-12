@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/plan/canvas/canvas",
+    "pages/stylist/detail/detail",
     "pages/index/index",
     "pages/catalog/catalog",
     "pages/newGoods/newGoods",

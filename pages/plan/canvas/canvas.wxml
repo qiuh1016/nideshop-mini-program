@@ -1,0 +1,19 @@
+<!--pages/plan/canvas/canvas.wxml-->
+<canvas canvas-id='customCanvas' hidden='{{canvasHidden}}'></canvas>
+
+<view class="img-container"> 
+  <image class='img' wx:for='{{goods}}' wx:for-index="index" wx:key='{{item.id}}' 
+  wx:if='{{item.selected}}' data-index='{{index}}'
+  src='{{item.url}}' bindtouchend='ImgTouchEnd'
+  bindtouchmove='ImgTouchMove' style='width: {{item.width}}px;height: {{item.height}}px; top: {{item.top}}px; left: {{item.left}}px;'></image>
+</view>
+
+<view class='bottom-control'>
+  <button class='add-btn'></button>
+  <scroll-view class='good-container' scroll-x='true'>
+    <image class='good-thumbnail'
+    wx:for='{{goods}}' wx:key='{{item.id}}' wx:for-index="index" src='{{item.url}}'
+    data-index='{{index}}' bindtap='thumbnailTapped'></image>
+  </scroll-view>
+  <button class='save-btn' bindtap='saveCanvas'>保存</button>
+</view>

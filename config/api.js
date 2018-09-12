@@ -59,4 +59,6 @@ module.exports = {
 
   FootprintList: ApiRootUrl + 'footprint/list',  //足迹列表
   FootprintDelete: ApiRootUrl + 'footprint/delete',  //删除足迹
+
+  StylistDetail: ApiRootUrl + 'stylist/detail', // 搭配师详情
 };
