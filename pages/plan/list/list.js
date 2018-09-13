@@ -27,6 +27,9 @@ Page({
   },
 
   getPlanDataByStyle() {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let that = this;
     util.request(api.PlanList, {
         stylist_id: this.data.stylist_id,
@@ -39,6 +42,7 @@ Page({
             showSearchResult: false
           });
         }
+        wx.hideLoading()
       });
   },
 
@@ -52,6 +56,10 @@ Page({
       return;
     }
 
+    wx.showLoading({
+      title: '加载中...',
+    })
+
     let that = this;
     util.request(api.PlanSearch, {
         stylist_id: this.data.stylist_id,
@@ -59,7 +67,6 @@ Page({
       })
       .then(function(res) {
         if (res.errno === 0) {
-
           if (res.data.length == 0) {
             wx.showModal({
               title: '提示',
@@ -73,8 +80,8 @@ Page({
 
             });
           }
-
         }
+        wx.hideLoading()
       });
   },
 

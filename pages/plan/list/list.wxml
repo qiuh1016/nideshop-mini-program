@@ -19,6 +19,7 @@
   </view>
 </view>
 
+<view style='height: 70rpx;'></view>
 
 <view class="bottom-btn" wx:if="{{!showSearchResult}}">
   <navigator class="bottom-navigator" url="../add/add?style={{styles[currentStyleBtnIndex]}}">

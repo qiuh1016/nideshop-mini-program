@@ -178,7 +178,7 @@ Page({
     });
   },
   onLoad: function (options) {
-    if (options.forplan) {
+    if (options.forplan === 'true') {
       this.setData({
         forplan: options.forplan
       })

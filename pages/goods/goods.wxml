@@ -93,7 +93,7 @@
     </view>
   </view>
 
-  <view class="related-goods" wx:if="{{relatedGoods.length > 0}}">
+  <view class="related-goods" wx:if="{{relatedGoods.length > 0 && !forplan}}">
     <view class="h">
       <view class="line"></view>
       <text class="title">大家都在看</text>

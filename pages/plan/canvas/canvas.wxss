@@ -5,9 +5,9 @@ canvas {
   position: absolute;
   /* width: 1500rpx;
   height: 1500rpx; */
-  top: 0;
-  left: 0;
-  z-index: -1;
+  top: 1500rpx;
+  left: 1500rpx;
+  z-index: -999;
   opacity: 0;
 }
 
