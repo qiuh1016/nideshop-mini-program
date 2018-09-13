@@ -16,10 +16,8 @@ Page({
     forplan: false
   },
   onLoad: function (options) {
-    console.log(options);
     // 区分是普通浏览 还是搭配方案的选择物品
     if (options.forplan == 'true') {
-      console.log('for plan true');
       this.setData({
         forplan: true
       })
@@ -85,7 +83,6 @@ Page({
   },
   onShow: function () {
     // 页面显示
-    console.log(1);
   },
   onHide: function () {
     // 页面隐藏

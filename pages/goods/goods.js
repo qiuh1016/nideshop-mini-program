@@ -178,7 +178,6 @@ Page({
     });
   },
   onLoad: function (options) {
-    console.log(options.forplan);
     if (options.forplan == 'true') {
       this.setData({
         forplan: options.forplan
@@ -190,7 +189,6 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
       id: parseInt(options.id)
-      // id: 1181000
     });
     var that = this;
     this.getGoodsInfo();
@@ -329,11 +327,14 @@ Page({
 
   },
   addToCanvas: function() {
+    wx.navigateBack({
+      delta: 3
+    })
     var pages = getCurrentPages();
     var canvasPage = pages[pages.length - 4];  // -1 当前商品页面 -2 categroy页面 -3 catalog -4 cavas
     canvasPage.addGoods({
       id: this.data.goods.id,
-      url: this.data.goods.primary_pic_url,
+      url: this.data.goods.list_pic_url,
       picwidth: 200,
       picheight: 200,
       width: 150,
@@ -341,9 +342,6 @@ Page({
       top: 0,
       left: 0,
       scale: 1
-    })
-    wx.navigateBack({
-      delta: 3
     })
   },
   cutNumber: function () {

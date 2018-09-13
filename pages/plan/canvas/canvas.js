@@ -40,7 +40,7 @@ Page({
       fit_scene: options.fit_scene,
       desc: options.desc,
     });
-    console.log(this.data);
+    // this.getTestData();
   },
 
   getTestData() {
@@ -67,10 +67,10 @@ Page({
       }, {
         id: 3,
         url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/96416556/TB2bvk2tCtYBeNjSspkXXbU8VXa_!!0-saturn_solar.jpg_360x360Q90.jpg',
-        picwidth: 160,
-        picheight: 160,
-        width: 80,
-        height: 80,
+        picwidth: 200,
+        picheight: 200,
+        width: 100,
+        height: 100,
         top: 0,
         left: 0,
         scale: 1
@@ -221,6 +221,7 @@ Page({
               desc: _this.data.desc
             },  
             success: function (res) {
+              console.log(res);
               wx.hideLoading()
               if (res.statusCode === 200) {
                 var pages = getCurrentPages();

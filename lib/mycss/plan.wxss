@@ -37,21 +37,33 @@
   border-bottom-right-radius: 15rpx;
 }
 
-
 .style-grid {
   width: 750rpx;
   height: auto;
   overflow: hidden;
   position: relative;
   margin-top: 30rpx;
+  border-top: 1px solid rgba(0,0,0,.15);
 }
 
-.style-item {
+.style-item:nth-child(odd) {
   float: left;
   width: 375rpx;
   height: 375rpx;
-  /* background: red; */
+  background: #fff;
   position: relative;
+  border: 1px solid rgba(0,0,0,.15);
+  border-left: none;
+  border-top: none;
+}
+
+.style-item:nth-child(even) {
+  float: left;
+  width: 375rpx;
+  height: 375rpx;
+  background: #fff;
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,.15);
 }
 
 .style-item-img {
@@ -59,9 +71,8 @@
   height: 300rpx;
   width: 355rpx;
   left: 10rpx;
-  top: 0;
-  border: 1rpx solid #d8d8d8;
-  /* background: green; */
+  top: 10rpx;
+  /* border: 1px solid #d8d8d8; */
 }
 
 .style-item-text {

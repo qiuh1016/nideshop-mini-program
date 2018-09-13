@@ -30,9 +30,9 @@
   </i-panel>
 </form>
 
-<view class="bottom-btn">
-  <navigator class="bottom-navigator"
-   url='../canvas/canvas?name={{name}}&style={{style}}&fit_group={{fit_group}}&fit_scene={{fit_scene}}&desc={{desc}}'>
-    <view class="r {{btnDisable ? 'disable' : ''}}" bind:click="iViewSubmit">添加商品</view>
-  </navigator>
+<view class="bottom-btn" bindtap='addItem'>
+  <!-- <navigator class="bottom-navigator"
+   url='../canvas/canvas?name={{name}}&style={{style}}&fit_group={{fit_group}}&fit_scene={{fit_scene}}&desc={{desc}}'> -->
+    <view class="r {{btnDisable ? 'disable' : ''}}">添加商品</view>
+  <!-- </navigator> -->
 </view>

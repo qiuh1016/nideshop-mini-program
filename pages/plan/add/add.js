@@ -85,6 +85,14 @@ Page({
       })
     }
   },
+
+  addItem() {
+    if (this.data.btnDisable) return
+
+    wx.navigateTo({
+      url: `../canvas/canvas?name=${this.data.name}&style=${this.data.style}&fit_group=${this.data.fit_group}&fit_scene=${this.data.fit_scene}&desc=${this.data.desc}`,
+    })
+  },
   /**
    * Lifecycle function--Called when page is initially rendered
    */

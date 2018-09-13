@@ -2,6 +2,12 @@
 @import "../../../lib/mycss/plan";
 @import "../../../lib/mycss/common";
 
+page {
+  height: 100%;
+  width: 100%;
+  background: #f4f4f4;
+}
+
 .search {
   margin: 20rpx 10rpx 0 10rpx;
   padding: 10rpx 0;
@@ -14,6 +20,7 @@
   float: left;
   border: 1rpx solid #d8d8d8;
   padding: 0 20rpx;
+  background: #fff;
 }
 
 .phcolor {
@@ -29,6 +36,7 @@
   line-height: 70rpx;
   text-align: center;
   margin-left: 10rpx;
+  background: #fff;
 }
 
 .search-title {

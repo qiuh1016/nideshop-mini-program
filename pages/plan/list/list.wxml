@@ -21,8 +21,8 @@
 
 <view style='height: 70rpx;'></view>
 
-<view class="bottom-btn" wx:if="{{!showSearchResult}}">
+<view class="bottom-btn">
   <navigator class="bottom-navigator" url="../add/add?style={{styles[currentStyleBtnIndex]}}">
-    <view class="r" bindtap="addToCanvas">制作新方案</view>
+    <view class="r">制作新方案</view>
   </navigator>
 </view>
