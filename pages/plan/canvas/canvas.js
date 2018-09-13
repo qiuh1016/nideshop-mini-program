@@ -7,6 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name: '',
+    style: '',
+    fit_group: '',
+    fit_scene: '',
+    desc: '',
     screenHeight: 0,
     screenWidth: 0,
     goodsArr: [],
@@ -24,20 +29,21 @@ Page({
     wx.setNavigationBarTitle({
       title: '制作方案'
     });
-    var _this = this;
-    wx.getSystemInfo({
-      success: function(res) {
-        _this.setData({
-          screenWidth: res.windowWidth,
-          screenHeight: res.windowHeight,
-          unit: 750 / res.windowWidth
-        });
-      }
+    let res = wx.getSystemInfoSync();
+    this.setData({
+      screenWidth: res.windowWidth,
+      screenHeight: res.windowHeight,
+      unit: 750 / res.windowWidth,
+      name: options.name,
+      style: options.style,
+      fit_group: options.fit_group,
+      fit_scene: options.fit_scene,
+      desc: options.desc,
     });
-    // this.getData();
+    console.log(this.data);
   },
 
-  getData() {
+  getTestData() {
     let goodsArr = [{
         id: 1,
         url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/i4/82523815/TB1bDJIeiMnBKNjSZFzXXc_qVXa_!!0-item_pic.jpg_360x360Q90.jpg',
@@ -98,6 +104,12 @@ Page({
     this.setData({
       goodsArr: goodsArr
     })
+
+    // wx.showToast({
+    //   title: '添加成功',
+    //   icon: 'success',
+    //   duration: 2000
+    // })
   },
 
   getImgInfo(netUrl, storageKeyUrl) {
@@ -158,6 +170,7 @@ Page({
   },
 
   saveCanvas() {
+    if (this.data.goodsArr.length == 0) return;
     wx.showLoading({
       title: '保存中...',
     })
@@ -196,13 +209,26 @@ Page({
           }
 
           wx.uploadFile({
-            url: api.PlanUploadImg,
+            url: api.PlanSave,
             filePath: res.tempFilePath,
-            name: 'avatar',
+            name: 'image',
+            formData: {
+              goodsArr: JSON.stringify(_this.getGoodsJsonArr(_this.data.goodsArr)), //带上参数
+              name: _this.data.name,
+              style: _this.data.style,
+              fit_group: _this.data.fit_group,
+              fit_scene: _this.data.fit_scene,
+              desc: _this.data.desc
+            },  
             success: function (res) {
               wx.hideLoading()
-              console.log(res);
-              if (res.errno === 0) {
+              if (res.statusCode === 200) {
+                var pages = getCurrentPages();
+                var planListPage = pages[pages.length - 3];
+                planListPage.getPlanDataByStyle();
+                wx.navigateBack({
+                  delta: 2
+                })
               }
             }
           })
@@ -237,6 +263,22 @@ Page({
     this.setData({
       goodsArr: goodsArr
     })
+  },
+
+  getGoodsJsonArr(goodsArr) {
+    let arr = [];
+    for (let i in goodsArr) {
+      let goods = goodsArr[i];
+      arr.push({
+        id: goods.id,
+        x: goods.left,
+        y: goods.top,
+        w: goods.width,
+        h: goods.height,
+        enable: goods.selected ? 1 : 0
+      })
+    }
+    return arr;
   },
 
   /**

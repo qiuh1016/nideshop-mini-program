@@ -62,5 +62,7 @@ module.exports = {
 
   StylistDetail: ApiRootUrl + 'stylist/detail', // 搭配师详情
 
-  PlanUploadImg: ApiRootUrl + 'plan/save', //上传图片
+  PlanSave: ApiRootUrl + 'plan/save', // 保存方案
+  PlanList: ApiRootUrl + 'plan/list', // 
+  PlanSearch: ApiRootUrl + 'plan/search', // 搜索方案
 };

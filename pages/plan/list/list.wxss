@@ -1,30 +1,39 @@
 /* pages/plan/list/list.wxss */
-
 @import "../../../lib/mycss/plan";
+@import "../../../lib/mycss/common";
 
-.bottom-btn {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 10;
-  width: 750rpx;
-  height: 100rpx;
+.search {
+  margin: 20rpx 10rpx 0 10rpx;
+  padding: 10rpx 0;
   display: flex;
-  background: #fff;
 }
 
-.bottom-navigator {
-  width: 100%;
-  /* flex: 1; */
-}
-
-.bottom-btn .r {
-  border: 1px solid #408EE2;
-  background: #408EE2;
+.search-input {
+  flex: 3;
+  height: 70rpx;
   float: left;
-  height: 100rpx;
-  line-height: 96rpx;
-  width: 100%;
+  border: 1rpx solid #d8d8d8;
+  padding: 0 20rpx;
+}
+
+.phcolor {
+  color: #acacac;
+}
+
+.search-btn {
+  flex: 1;
+  height: 74rpx;
+  float: left;
+  border: 1rpx solid #408ee2;
+  border-radius: 10rpx;
+  line-height: 70rpx;
   text-align: center;
-  color: #fff;
+  margin-left: 10rpx;
+}
+
+.search-title {
+  width: 100%;
+  font-size: 30rpx;
+  color: #408ee2;
+  text-align: center;
 }

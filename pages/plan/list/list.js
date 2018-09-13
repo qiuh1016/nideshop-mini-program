@@ -1,12 +1,19 @@
 // pages/plan/list/list.js
+var util = require('../../../utils/util.js');
+var api = require('../../../config/api.js');
+
 Page({
 
   /**
    * Page initial data
    */
   data: {
+    stylist_id: 1,
+    styles: ['简约', '休闲', '轻时尚'],
     stylePlans: [], // 搭配方案
     currentStyleBtnIndex: 0, // 当前风格按钮index
+    keyword: '',
+    showSearchResult: false, // 显示搜索结果的时候 把 tab隐藏
   },
 
   /**
@@ -16,8 +23,66 @@ Page({
     wx.setNavigationBarTitle({
       title: '方案库'
     })
-    // TODO 
-    this.testData();
+    this.getPlanDataByStyle();
+  },
+
+  getPlanDataByStyle() {
+    let that = this;
+    util.request(api.PlanList, {
+        stylist_id: this.data.stylist_id,
+        style: this.data.styles[this.data.currentStyleBtnIndex]
+      })
+      .then(function(res) {
+        if (res.errno === 0) {
+          that.setData({
+            stylePlans: res.data,
+            showSearchResult: false
+          });
+        }
+      });
+  },
+
+  getPlanDataByKeyword() {
+    let keyword = this.data.keyword;
+    if (keyword == '') {
+      this.getPlanDataByStyle();
+      this.setData({
+        showSearchResult: false
+      })
+      return;
+    }
+
+    let that = this;
+    util.request(api.PlanSearch, {
+        stylist_id: this.data.stylist_id,
+        keyword: keyword
+      })
+      .then(function(res) {
+        if (res.errno === 0) {
+
+          if (res.data.length == 0) {
+            wx.showModal({
+              title: '提示',
+              content: '未找到相关方案',
+              showCancel: false
+            })
+          } else {
+            that.setData({
+              stylePlans: res.data,
+              showSearchResult: true
+
+            });
+          }
+
+        }
+      });
+  },
+
+  getKeyword(e) {
+    var val = e.detail.value;
+    this.setData({
+      keyword: val
+    })
   },
 
   /**
@@ -38,10 +103,10 @@ Page({
   },
 
   styleBtnTapped(e) {
-    // TODO: 请求服务器数据 刷新stylePlans
     this.setData({
       currentStyleBtnIndex: e.target.dataset.index,
     })
+    this.getPlanDataByStyle();
   },
 
   /**

@@ -1,4 +1,5 @@
 /* pages/plan/canvas/canvas.wxss */
+@import "../../../lib/mycss/common.wxss";
 
 canvas {
   position: absolute;
@@ -14,6 +15,7 @@ canvas {
   width: 750rpx;
   height: 750rpx;
   border: 1rpx solid #c9c9c9;
+  overflow: hidden;
   /* background: green; */
 }
 
@@ -54,28 +56,7 @@ canvas {
   margin-bottom: 10rpx;
   float: left;
   padding: 25rpx;
-  border: 1rpx solid #797979;
+  border: 1rpx solid #a5a5a5;
   border-radius: 10rpx;
 }
 
-.bottom-btn {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 10;
-  width: 750rpx;
-  height: 100rpx;
-  display: flex;
-  background: #fff;
-}
-
-.bottom-btn .r {
-  border: 1px solid #408EE2;
-  background: #408EE2;
-  float: left;
-  height: 100rpx;
-  line-height: 96rpx;
-  flex: 1;
-  text-align: center;
-  color: #fff;
-}

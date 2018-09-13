@@ -1,21 +1,27 @@
 <!--pages/plan/list/list.wxml-->
-<text>pages/plan/list/list.wxml</text>
+<view class="search">
+  <input class="search-input" placeholder="请输入方案名称" placeholder-class="phcolor" bindinput="getKeyword"></input>
+  <view class="search-btn" bindtap='getPlanDataByKeyword'>搜索</view>
+</view>
+
 <view class="style">
-  <view class="style-btns">
+  <view class='search-title' wx:if="{{showSearchResult}}">搜索结果</view>
+  <view class="style-btns" wx:if="{{!showSearchResult}}">
     <view class="style-btn style-btn-first {{currentStyleBtnIndex == 0 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="0">简约</view>
     <view class="style-btn style-btn-middle {{currentStyleBtnIndex == 1 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="1">休闲</view>
     <view class="style-btn style-btn-last {{currentStyleBtnIndex == 2 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="2">轻时尚</view>
   </view>
-  <view class="style-grid">
+  <view class="style-grid" style="margin-bottom: 110rpx;">
     <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id">
-      <image class='style-item-img' src='{{item.imgurl}}'></image>
-      <text class='style-item-text'>{{item.text}}</text>
+      <image class="style-item-img" src="{{item.image_url}}"></image>
+      <text class="style-item-text">{{item.name}}</text>
     </view>
   </view>
 </view>
 
-<view class="bottom-btn">
-  <navigator class='bottom-navigator' url='../canvas/canvas'>
+
+<view class="bottom-btn" wx:if="{{!showSearchResult}}">
+  <navigator class="bottom-navigator" url="../add/add?style={{styles[currentStyleBtnIndex]}}">
     <view class="r" bindtap="addToCanvas">制作新方案</view>
   </navigator>
 </view>

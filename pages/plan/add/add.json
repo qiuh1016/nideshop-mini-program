@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "方案制作",
+  "usingComponents": {
+    "i-input": "../../../lib/iView/input/index",
+    "i-button": "../../../lib/iView/button/index",
+    "i-panel": "../../../lib/iView/panel/index",
+    "i-radio": "../../../lib/iView/radio/index",
+    "i-radio-group": "../../../lib/iView/radio-group/index"
+  }
+}

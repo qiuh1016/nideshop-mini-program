@@ -21,7 +21,7 @@
       </view>
     </view>
   </view>
-  <view class="section-nav section-attr" bindtap="switchAttrPop">
+  <view class="section-nav section-attr" bindtap="switchAttrPop" wx:if="{{!forplan}}">
     <view class="t">请选择规格数量</view>
     <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
   </view>

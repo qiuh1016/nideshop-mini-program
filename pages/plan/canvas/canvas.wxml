@@ -20,5 +20,5 @@
 </view>
 
 <view class="bottom-btn">
-  <view class="r" bindtap="saveCanvas">保存</view>
+  <view class="r {{goodsArr.length == 0 ? 'disable' : ''}}" bindtap="saveCanvas">保存</view>
 </view>

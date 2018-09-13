@@ -569,8 +569,8 @@
 }
 
 .bottom-btn .r {
-  border: 1px solid #b4282d;
-  background: #b4282d;
+  border: 1px solid #408ee2;
+  background: #408ee2;
   float: left;
   height: 100rpx;
   line-height: 96rpx;
@@ -578,6 +578,7 @@
   text-align: center;
   color: #fff;
 }
+
 @import "../../lib/wxParse/wxParse.wxss";
 
 .attr-pop-box {

@@ -1,0 +1,31 @@
+.bottom-btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 750rpx;
+  height: 100rpx;
+  display: flex;
+  background: #fff;
+}
+
+.bottom-navigator {
+  width: 100%;
+  /* flex: 1; */
+}
+
+.bottom-btn .r {
+  border: 1px solid #408ee2;
+  background: #408ee2;
+  float: left;
+  height: 100rpx;
+  line-height: 96rpx;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+}
+
+.bottom-btn .disable {
+  border: 1px solid rgb(175, 175, 175);
+  background: rgb(175, 175, 175);
+}

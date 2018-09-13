@@ -1,6 +1,6 @@
 
 .style {
-  margin: 40rpx 0;
+  margin: 30rpx 0;
 }
 
 .style-btns {
@@ -43,7 +43,7 @@
   height: auto;
   overflow: hidden;
   position: relative;
-  margin-top: 20rpx;
+  margin-top: 30rpx;
 }
 
 .style-item {
@@ -60,6 +60,7 @@
   width: 355rpx;
   left: 10rpx;
   top: 0;
+  border: 1rpx solid #d8d8d8;
   /* background: green; */
 }
 

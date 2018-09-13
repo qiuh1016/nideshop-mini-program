@@ -36,7 +36,8 @@
     "pages/shopping/address/address",
     "pages/shopping/addressAdd/addressAdd",
     "pages/goods/goods",
-    "pages/topicDetail/topicDetail"
+    "pages/topicDetail/topicDetail",
+    "pages/plan/add/add"
   ],
   "window": {
     "backgroundTextStyle": "dark",
