@@ -61,4 +61,6 @@ module.exports = {
   FootprintDelete: ApiRootUrl + 'footprint/delete',  //删除足迹
 
   StylistDetail: ApiRootUrl + 'stylist/detail', // 搭配师详情
+
+  PlanUploadImg: ApiRootUrl + 'plan/save', //上传图片
 };

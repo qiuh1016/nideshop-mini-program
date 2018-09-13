@@ -1,18 +1,20 @@
 /* pages/plan/canvas/canvas.wxss */
+
 canvas {
   position: absolute;
-  width: 750rpx;
-  height: 750rpx;
+  /* width: 1500rpx;
+  height: 1500rpx; */
   top: 0;
   left: 0;
   z-index: -1;
-  /* display: none; */
+  opacity: 0;
 }
 
 .img-container {
   width: 750rpx;
   height: 750rpx;
-  background: green;
+  border: 1rpx solid #c9c9c9;
+  /* background: green; */
 }
 
 .img-container .img {
@@ -23,36 +25,57 @@ canvas {
 
 .bottom-control {
   position: absolute;
-  bottom: 10rpx;
+  bottom: 110rpx;
   left: 10rpx;
   right: 10rpx;
-}
-
-.save-btn {
-  width: 730rpx;
 }
 
 .good-container {
   width: 540rpx;
   height: 180rpx;
-  background: blue;
+  /* background: blue; */
   float: left;
   margin-left: 10rpx;
-  white-space: nowrap;  
+  white-space: nowrap;
   display: block;
+  margin-bottom: 20rpx;
 }
 
 .good-thumbnail {
   width: 180rpx;
   height: 180rpx;
   margin-right: 10rpx;
-  background: yellow;
+  /* background: yellow; */
 }
 
 .add-btn {
   width: 180rpx;
   height: 180rpx;
-  background: red;
   margin-bottom: 10rpx;
   float: left;
+  padding: 25rpx;
+  border: 1rpx solid #797979;
+  border-radius: 10rpx;
+}
+
+.bottom-btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 750rpx;
+  height: 100rpx;
+  display: flex;
+  background: #fff;
+}
+
+.bottom-btn .r {
+  border: 1px solid #408EE2;
+  background: #408EE2;
+  float: left;
+  height: 100rpx;
+  line-height: 96rpx;
+  flex: 1;
+  text-align: center;
+  color: #fff;
 }

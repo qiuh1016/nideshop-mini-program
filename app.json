@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/plan/list/list",
     "pages/plan/canvas/canvas",
     "pages/stylist/detail/detail",
     "pages/index/index",
     "pages/catalog/catalog",
+    "pages/catalog/forplan/catalog",
     "pages/newGoods/newGoods",
     "pages/hotGoods/hotGoods",
     "pages/ucenter/address/address",

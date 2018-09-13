@@ -1,19 +1,24 @@
 <!--pages/plan/canvas/canvas.wxml-->
-<canvas canvas-id='customCanvas' hidden='{{canvasHidden}}'></canvas>
+<canvas canvas-id='customCanvas' style='width: {{750 * unit}}rpx; height: {{750 * unit}}rpx'></canvas>
 
 <view class="img-container"> 
-  <image class='img' wx:for='{{goods}}' wx:for-index="index" wx:key='{{item.id}}' 
+  <image class='img' wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' 
   wx:if='{{item.selected}}' data-index='{{index}}'
   src='{{item.url}}' bindtouchend='ImgTouchEnd'
   bindtouchmove='ImgTouchMove' style='width: {{item.width}}px;height: {{item.height}}px; top: {{item.top}}px; left: {{item.left}}px;'></image>
 </view>
 
 <view class='bottom-control'>
-  <button class='add-btn'></button>
+  <navigator url='/pages/catalog/forplan/catalog'>
+    <image class='add-btn' src='../../../static/icons/svg_add.svg'></image>
+  </navigator>
   <scroll-view class='good-container' scroll-x='true'>
     <image class='good-thumbnail'
-    wx:for='{{goods}}' wx:key='{{item.id}}' wx:for-index="index" src='{{item.url}}'
+    wx:for='{{goodsArr}}' wx:key='{{item.id}}' wx:for-index="index" src='{{item.url}}'
     data-index='{{index}}' bindtap='thumbnailTapped'></image>
   </scroll-view>
-  <button class='save-btn' bindtap='saveCanvas'>保存</button>
+</view>
+
+<view class="bottom-btn">
+  <view class="r" bindtap="saveCanvas">保存</view>
 </view>

@@ -22,7 +22,8 @@ Page({
     openAttr: false,
     noCollectImage: "/static/images/icon_collect.png",
     hasCollectImage: "/static/images/icon_collect_checked.png",
-    collectBackImage: "/static/images/icon_collect.png"
+    collectBackImage: "/static/images/icon_collect.png",
+    forplan: false
   },
   getGoodsInfo: function () {
     let that = this;
@@ -177,6 +178,14 @@ Page({
     });
   },
   onLoad: function (options) {
+    if (options.forplan) {
+      this.setData({
+        forplan: options.forplan
+      })
+      wx.setNavigationBarTitle({
+        title: '制作方案'
+      });
+    }
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
       id: parseInt(options.id)
@@ -317,6 +326,24 @@ Page({
         });
     }
 
+  },
+  addToCanvas: function() {
+    var pages = getCurrentPages();
+    var canvasPage = pages[pages.length - 4];  // -1 当前商品页面 -2 categroy页面 -3 catalog -4 cavas
+    canvasPage.addGoods({
+      id: this.data.goods.id,
+      url: this.data.goods.primary_pic_url,
+      picwidth: 200,
+      picheight: 200,
+      width: 150,
+      height: 150,
+      top: 0,
+      left: 0,
+      scale: 1
+    })
+    wx.navigateBack({
+      delta: 3
+    })
   },
   cutNumber: function () {
     this.setData({

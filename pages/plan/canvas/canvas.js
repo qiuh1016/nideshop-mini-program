@@ -1,4 +1,6 @@
 // pages/plan/canvas/canvas.js
+const api = require('../../../config/api.js');
+
 Page({
 
   /**
@@ -7,54 +9,50 @@ Page({
   data: {
     screenHeight: 0,
     screenWidth: 0,
-    goods: [],
+    goodsArr: [],
     distance: 0,
     touchX: 0,
     touchY: 0,
-    canvasHidden: true,
+    // canvasHidden: true,
+    unit: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // var ctx = wx.createCanvasContext('customCanvas');
-    // ctx.setFillStyle('#5F6FEE')//文字颜色：默认黑色
-    // ctx.setFontSize(20)//设置字体大小，默认10
-    // ctx.fillText("LXT", 20, 20)//绘制文本
-    // //调用draw()开始绘制
-    // ctx.draw()
-
-    // ctx.drawImage("../../../static/images/wxpay.png", 0, 0, 100, 100)
-    // ctx.draw()
+    wx.setNavigationBarTitle({
+      title: '制作方案'
+    });
     var _this = this;
     wx.getSystemInfo({
       success: function(res) {
         _this.setData({
-          screenHeight: res.windowHeight,
           screenWidth: res.windowWidth,
+          screenHeight: res.windowHeight,
+          unit: 750 / res.windowWidth
         });
       }
     });
-    this.getData();
+    // this.getData();
   },
 
   getData() {
-    let goods = [{
+    let goodsArr = [{
         id: 1,
         url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/i4/82523815/TB1bDJIeiMnBKNjSZFzXXc_qVXa_!!0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 100,
-        picheight: 100,
-        width: 100,
-        height: 100,
+        picwidth: 200,
+        picheight: 200,
+        width: 200,
+        height: 200,
         top: 0,
         left: 0,
         scale: 1
       }, {
         id: 2,
         url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i3/3864942132/TB2K_KssyQnBKNjSZFmXXcApVXa_!!3864942132-0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 100,
-        picheight: 100,
+        picwidth: 200,
+        picheight: 200,
         width: 100,
         height: 100,
         top: 0,
@@ -63,8 +61,8 @@ Page({
       }, {
         id: 3,
         url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/96416556/TB2bvk2tCtYBeNjSspkXXbU8VXa_!!0-saturn_solar.jpg_360x360Q90.jpg',
-        picwidth: 80,
-        picheight: 80,
+        picwidth: 160,
+        picheight: 160,
         width: 80,
         height: 80,
         top: 0,
@@ -73,8 +71,8 @@ Page({
       }, {
         id: 4,
         url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/2055544716/TB2w3tlt29TBuNjy1zbXXXpepXa_!!2055544716-0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 100,
-        picheight: 100,
+        picwidth: 200,
+        picheight: 200,
         width: 100,
         height: 100,
         top: 0,
@@ -82,53 +80,31 @@ Page({
         scale: 1
     }];
 
-    for (let i in goods) {
-      let good = goods[i];
-      good.selected = false;
-      let _this = this;
-      // setTimeout(function() {
-      //   _this.getImgInfo(good.url, 'pic'+i);
-      // }, 1000 * i);
+    for (let i in goodsArr) {
+      let goods = goodsArr[i];
+      goods.selected = false;
+      this.getImgInfo(goods.url, 'pic'+i);
     }
 
     this.setData({
-      goods: goods
+      goodsArr: goodsArr
     })
+  },
 
-    return;
-
-    wx.getImageInfo({
-      src: netUrl,
-      success: (res) => { //请求接口成功后
-        this.imgUrl = res.data.data;
-        app.globalData.imgUrl = this.imgUrl;
-        for (let i = 0; i < this.imgUrl.length; i++) { // 使用循环遍历出数组得数据
-          for (let e = 0; e < this.imgUrl[i].length; e++) {
-            wx.getImageInfo({ //保存网络图片
-              src: "https://" + this.imgUrl[i][e].url, //请求的网络图片路径
-              success: function (res) {
-                //请求成功后将会生成一个本地路径即res.path,然后将该路径缓存到storageKeyUrl关键字中
-                app.globalData.imgUrl[i][e].localpic = res.path;
-                if (i == 2 && e == that.imgUrl[2].length - 1) { //数据量太大时做一个加载判断，
-                  that.setData({
-                    show: 1
-                  })
-                }
-              },
-            })
-          }
-        }
-      }
+  addGoods(goods) {
+    let goodsArr = this.data.goodsArr;
+    goodsArr.push(goods);
+    this.getImgInfo(goods.url, `pic${goodsArr.length - 1}`)
+    this.setData({
+      goodsArr: goodsArr
     })
-
   },
 
   getImgInfo(netUrl, storageKeyUrl) {
-    console.log(storageKeyUrl);
+    let that = this;
     wx.getImageInfo({
       src: netUrl,
       success: function(res) {
-        console.log('storageKeyUrl' + storageKeyUrl);
         wx.setStorage({
           key: storageKeyUrl,
           data: res.path,
@@ -137,23 +113,18 @@ Page({
     })
   },
 
-  ImgTouchStart(e) {
-    console.log(e.touches[0].clientX);
-    console.log(e.touches[0].clientY);
-  },
-
   ImgTouchMove(e) {
     let index = e.currentTarget.dataset.index;
-    let goods = this.data.goods;
-    let good = goods[index];
+    let goodsArr = this.data.goodsArr;
+    let goods = goodsArr[index];
     if (e.touches.length == 1) {
       if (this.data.touchX != 0 || this.data.touchY != 0) {
         let diffX = e.touches[0].clientX - this.data.touchX;
         let diffY = e.touches[0].clientY - this.data.touchY;
-        good.left = good.left + diffX;
-        good.top = good.top + diffY;
+        goods.left = goods.left + diffX;
+        goods.top = goods.top + diffY;
         this.setData({
-          goods: goods
+          goodsArr: goodsArr
         })
       }
       this.data.touchX = e.touches[0].clientX;
@@ -164,16 +135,16 @@ Page({
       let distance = Math.sqrt(xMove * xMove + yMove * yMove);
       if (this.data.distance != 0) {
         let distanceDiff = distance - this.data.distance;
-        let newScale = good.scale + 0.005 * distanceDiff;
+        let newScale = goods.scale + 0.005 * distanceDiff;
         if (newScale <= 2 && newScale >= 0.5) {
-          good.scale = newScale;
-          good.width = good.picwidth * good.scale;
-          good.height = good.picheight * good.scale;
+          goods.scale = newScale;
+          goods.width = goods.picwidth * goods.scale;
+          goods.height = goods.picheight * goods.scale;
         }
       }
       this.setData({
         distance: distance,
-        goods: goods
+        goodsArr: goodsArr
       })
     }
   },
@@ -190,30 +161,30 @@ Page({
     wx.showLoading({
       title: '保存中...',
     })
-    this.setData({
-      canvasHidden: false
-    })
+    // this.setData({
+    //   canvasHidden: false
+    // })
+    var unit = this.data.unit;
     var _this = this;
     var ctx = wx.createCanvasContext('customCanvas');
     ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, _this.data.screenWidth, _this.data.screenHeight);
-    var unit = this.data.screenWidth / 375;
-    var goods = this.data.goods;
-    for (let i in goods) {
-      let good = goods[i];
-      if (good.selected) {
+    ctx.fillRect(0, 0, _this.data.screenWidth * unit, _this.data.screenHeight * unit);
+    var goodsArr = this.data.goodsArr;
+    for (let i in goodsArr) {
+      let goods = goodsArr[i];
+      if (goods.selected) {
         var imgurl = wx.getStorageSync('pic' + i);
-        console.log(imgurl);
-        ctx.drawImage(imgurl, good.left, good.top, good.width, good.height);
-        console.log('draw : ' + i);
+        ctx.drawImage(imgurl, goods.left * unit, goods.top * unit, goods.width * unit, goods.height * unit);
       }
     }
     ctx.draw(false, function() {
       wx.canvasToTempFilePath({
         x: 0,
         y: 0,
-        width: _this.data.screenWidth,
-        height: _this.data.screenHeight,
+        width: _this.data.screenWidth * unit,
+        height: _this.data.screenWidth * unit,
+        destWidth: _this.data.screenWidth * unit,
+        destHeight: _this.data.screenWidth * unit,
         canvasId: 'customCanvas',
         success: function(res) {
           if (!res.tempFilePath) {
@@ -223,25 +194,37 @@ Page({
               showCancel: false
             })
           }
-          //画板路径保存成功后，调用方法吧图片保存到用户相册
-          wx.saveImageToPhotosAlbum({
+
+          wx.uploadFile({
+            url: api.PlanUploadImg,
             filePath: res.tempFilePath,
-            //保存成功失败之后，都要隐藏画板，否则影响界面显示。
-            success: (res) => {
-              console.log(res)
+            name: 'avatar',
+            success: function (res) {
               wx.hideLoading()
-              _this.setData({
-                canvasHidden: true
-              })
-            },
-            fail: (err) => {
-              console.log(err)
-              wx.hideLoading()
-              _this.setData({
-                canvasHidden: true
-              })
+              console.log(res);
+              if (res.errno === 0) {
+              }
             }
           })
+          // //画板路径保存成功后，调用方法吧图片保存到用户相册
+          // wx.saveImageToPhotosAlbum({
+          //   filePath: res.tempFilePath,
+          //   //保存成功失败之后，都要隐藏画板，否则影响界面显示。
+          //   success: (res) => {
+          //     console.log(res)
+          //     wx.hideLoading()
+          //     _this.setData({
+          //       canvasHidden: true
+          //     })
+          //   },
+          //   fail: (err) => {
+          //     console.log(err)
+          //     wx.hideLoading()
+          //     _this.setData({
+          //       canvasHidden: true
+          //     })
+          //   }
+          // })
         }
       }, this)
     });
@@ -249,10 +232,10 @@ Page({
 
   thumbnailTapped(e) {
     let index = e.currentTarget.dataset.index;
-    let goods = this.data.goods;
-    goods[index].selected = !goods[index].selected;
+    let goodsArr = this.data.goodsArr;
+    goodsArr[index].selected = !goodsArr[index].selected;
     this.setData({
-      goods: goods
+      goodsArr: goodsArr
     })
   },
 

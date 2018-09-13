@@ -12,9 +12,17 @@ Page({
     scrollTop: 0,
     scrollHeight: 0,
     page: 1,
-    size: 10000
+    size: 10000,
+    forplan: false
   },
   onLoad: function (options) {
+    // 区分是普通浏览 还是搭配方案的选择物品
+    if (options.forplan) {
+      this.data.forplan = true;
+      wx.setNavigationBarTitle({
+        title: '制作方案'
+      });
+    }
     // 页面初始化 options为页面跳转所带来的参数
     var that = this;
     if (options.id) {
