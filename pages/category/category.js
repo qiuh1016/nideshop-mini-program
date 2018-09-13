@@ -18,9 +18,11 @@ Page({
   onLoad: function (options) {
     console.log(options);
     // 区分是普通浏览 还是搭配方案的选择物品
-    if (options.forplan === 'true') {
+    if (options.forplan == 'true') {
       console.log('for plan true');
-      this.data.forplan = true;
+      this.setData({
+        forplan: true
+      })
       wx.setNavigationBarTitle({
         title: '制作方案'
       });
