@@ -38,6 +38,9 @@ Page({
       .then(function(res) {
         if (res.errno === 0) {
           that.setData({
+            stylePlans: [],
+          })
+          that.setData({
             stylePlans: res.data,
             showSearchResult: false
           });
@@ -111,11 +114,17 @@ Page({
 
   styleBtnTapped(e) {
     this.setData({
-      currentStyleBtnIndex: e.target.dataset.index,
+      currentStyleBtnIndex: e.currentTarget.dataset.index,
     })
     this.getPlanDataByStyle();
   },
 
+  editPlan(e) {
+    let planid = e.currentTarget.dataset.planid;
+    wx.navigateTo({
+      url: `../canvas/canvas?planid=${planid}`,
+    })
+  },
   /**
    * Lifecycle function--Called when page is initially rendered
    */

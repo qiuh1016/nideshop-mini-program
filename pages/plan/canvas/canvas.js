@@ -1,5 +1,6 @@
 // pages/plan/canvas/canvas.js
 const api = require('../../../config/api.js');
+const util = require('../../../utils/util.js');
 
 Page({
 
@@ -7,18 +8,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name: '',
+    planid: '',
+    planDetail: '',
     style: '',
-    fit_group: '',
-    fit_scene: '',
-    desc: '',
     screenHeight: 0,
     screenWidth: 0,
     goodsArr: [],
     distance: 0,
     touchX: 0,
     touchY: 0,
-    // canvasHidden: true,
     unit: 0,
     removeBtnShow: false,
     actionBarShow: false,
@@ -37,15 +35,54 @@ Page({
       screenWidth: res.windowWidth,
       screenHeight: res.windowHeight,
       unit: 750 / res.windowWidth,
-      name: options.name,
-      style: options.style,
-      fit_group: options.fit_group,
-      fit_scene: options.fit_scene,
-      desc: options.desc,
     });
-    // this.getTestData();
+
+    let style = options.style
+    if (style) {
+      this.setData({
+        style: style
+      })
+    }
+
+    let planid = options.planid;
+    if (planid) {
+      this.setData({
+        planid: planid
+      })
+      this.getPlanDetail(planid)
+    }
   },
 
+  getPlanDetail(planid) {
+    wx.showLoading({
+      title: '加载中...',
+    })
+
+    let that = this;
+    util.request(api.PlanGet, {
+      id: planid,
+    })
+      .then(function (res) {
+        if (res.errno === 0) {
+          if (res.data.length == 0) {
+            wx.showModal({
+              title: '提示',
+              content: '未找到相关方案',
+              showCancel: false
+            })
+          } else {
+            let goodsArr = res.data.items;
+            that.setData({
+              planDetail: res.data.plan,
+              goodsArr: res.data.items
+            });
+
+            console.log(res.data.items)
+          }
+        }
+        wx.hideLoading()
+      });
+  },
 
   toggleRemoveBtn() {
     this.setData({
@@ -67,8 +104,8 @@ Page({
   addToCanvas(e) {
     let index = e.currentTarget.dataset.index;
     let goodsArr = this.data.goodsArr;
-    if (!goodsArr[index].selected) {
-      goodsArr[index].selected = !goodsArr[index].selected;
+    if (goodsArr[index].enabled == 0) {
+      goodsArr[index].enabled = 1;
       this.setData({
         goodsArr: goodsArr,
       })
@@ -82,7 +119,7 @@ Page({
   removeFromCanvas() {
     let index = this.data.canvasGoodsIndex;
     let goodsArr = this.data.goodsArr;
-    goodsArr[index].selected = false;
+    goodsArr[index].enabled = 0;
     this.setData({
       goodsArr: goodsArr,
       actionBarShow: false
@@ -131,32 +168,40 @@ Page({
 
   addGoods(goods) {
     let goodsArr = this.data.goodsArr;
-    goods.picwidth = 200;
-    goods.picheight = 200;
-    goods.width = 150;
-    goods.height = 150;
-    goods.top = (this.data.screenWidth - goods.picwidth) / 2;
-    goods.left = (this.data.screenWidth - goods.picheight) / 2;
+    let width = this.data.screenWidth / 2;
+    goods.picwidth = width;
+    goods.picheight = width;
+    goods.w = width;
+    goods.h = width;
+    goods.y = (this.data.screenWidth - goods.picwidth) / 2;
+    goods.x = (this.data.screenWidth - goods.picheight) / 2;
     goods.scale = 1;
     goods.z = goodsArr.length;
-    goods.selected = false;
+    goods.enabled = 0;
     goodsArr.push(goods);
     this.getImgInfo(goods.url, `pic${goodsArr.length - 1}`)
     this.setData({
-      goodsArr: goodsArr
+      goodsArr: goodsArr,
+      removeBtnShow: false
     })
-
-    // wx.showToast({
-    //   title: '添加成功',
-    //   icon: 'success',
-    //   duration: 2000
-    // })
   },
 
   removeGoods(e) {
     let index = e.currentTarget.dataset.index;
     let goodsArr = this.data.goodsArr;
+    let removeZ = goodsArr[index].z;
     goodsArr.splice(index, 1);
+    for (let i in goodsArr) {
+      let goods = goodsArr[i];
+      // 后面的z 全部剪1
+      if (goods.z > removeZ) goods.z = goods.z - 1;
+      // 缓存的图片地址 改一下key
+      if (i >= index) {
+        let j = i;
+        let picurl = wx.getStorageSync(`pic${++j}`)
+        wx.setStorageSync(`pic${--j}`, picurl)
+      }
+    }
     this.setData({
       goodsArr: goodsArr
     })
@@ -180,9 +225,6 @@ Page({
     wx.showLoading({
       title: '保存中...',
     })
-    // this.setData({
-    //   canvasHidden: false
-    // })
     var unit = this.data.unit;
     var _this = this;
     var ctx = wx.createCanvasContext('customCanvas');
@@ -191,9 +233,9 @@ Page({
     var goodsArr = this.data.goodsArr;
     for (let i in goodsArr) {
       let goods = goodsArr[i];
-      if (goods.selected) {
+      if (goods.enabled == 1) {
         var imgurl = wx.getStorageSync('pic' + i);
-        ctx.drawImage(imgurl, goods.left * unit, goods.top * unit, goods.width * unit, goods.height * unit);
+        ctx.drawImage(imgurl, goods.x * unit, goods.y * unit, goods.w * unit, goods.h * unit);
       }
     }
     ctx.draw(false, function () {
@@ -213,13 +255,18 @@ Page({
               showCancel: false
             })
           }
-
+          wx.hideLoading();
+          
+          wx.navigateTo({
+            url: `../add/add?planid=${_this.data.planid}&style=${_this.data.style}&tempFilePath=${res.tempFilePath}`,
+          })
+          /*
           wx.uploadFile({
             url: api.PlanSave,
             filePath: res.tempFilePath,
             name: 'image',
             formData: {
-              goodsArr: JSON.stringify(_this.getGoodsJsonArr(_this.data.goodsArr)), //带上参数
+              goodsArr: JSON.stringify(_this.data.goodsArr), //带上参数
               name: _this.data.name,
               style: _this.data.style,
               fit_group: _this.data.fit_group,
@@ -239,6 +286,7 @@ Page({
               }
             }
           })
+          */
           // //画板路径保存成功后，调用方法吧图片保存到用户相册
           // wx.saveImageToPhotosAlbum({
           //   filePath: res.tempFilePath,
@@ -263,26 +311,6 @@ Page({
     });
   },
 
-  /**
-   * 将data里的arr转换成上传用的arr，减少不必要的数据
-   */
-  getGoodsJsonArr(goodsArr) {
-    let arr = [];
-    for (let i in goodsArr) {
-      let goods = goodsArr[i];
-      arr.push({
-        id: goods.id,
-        x: goods.left,
-        y: goods.top,
-        z: goods.z,
-        w: goods.width,
-        h: goods.height,
-        enable: goods.selected ? 1 : 0
-      })
-    }
-    return arr;
-  },
-
   ImgTouchStart() {
     this.setData({
       actionBarShow: false
@@ -300,8 +328,8 @@ Page({
       if (this.data.touchX != 0 || this.data.touchY != 0) {
         let diffX = clientX - this.data.touchX;
         let diffY = clientY - this.data.touchY;
-        goods.left = goods.left + diffX;
-        goods.top = goods.top + diffY;
+        goods.x = goods.x + diffX;
+        goods.y = goods.y + diffY;
         this.setData({
           goodsArr: goodsArr
         })
@@ -317,8 +345,8 @@ Page({
         let newScale = goods.scale + 0.005 * distanceDiff;
         if (newScale <= 2 && newScale >= 0.5) {
           goods.scale = newScale;
-          goods.width = goods.picwidth * goods.scale;
-          goods.height = goods.picheight * goods.scale;
+          goods.w = goods.picwidth * goods.scale;
+          goods.h = goods.picheight * goods.scale;
         }
       }
       this.setData({

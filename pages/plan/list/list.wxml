@@ -12,7 +12,8 @@
     <view class="style-btn style-btn-last {{currentStyleBtnIndex == 2 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="2">轻时尚</view>
   </view>
   <view class="style-grid" style="margin-bottom: 110rpx;">
-    <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id">
+    <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id"
+    bindtap="editPlan" data-planid="{{item.id}}">
       <image class="style-item-img" src="{{item.image_url}}"></image>
       <text class="style-item-text">{{item.name}}</text>
     </view>
@@ -22,7 +23,7 @@
 <view style='height: 70rpx;'></view>
 
 <view class="bottom-btn">
-  <navigator class="bottom-navigator" url="../add/add?style={{styles[currentStyleBtnIndex]}}">
+  <navigator class="bottom-navigator" url="../canvas/canvas?style={{styles[currentStyleBtnIndex]}}">
     <view class="r">制作新方案</view>
   </navigator>
 </view>

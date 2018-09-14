@@ -17,22 +17,22 @@
 
 <form>
   <i-panel title="方案详情">
-    <i-input value="{{ value6 }}" type="text" right title="方案名称" mode="wrapped" placeholder="" maxlength="20" bind:change='handleNameChange' />
+    <i-input value="{{ name }}" type="text" right title="方案名称" mode="wrapped" placeholder="" maxlength="20" bind:change='handleNameChange' />
     <view class="i-class i-cell i-input i-input-wrapped">
       <view class="i-cell-hd i-input-title">风格</view>
       <picker class="picker i-input-input i-cell-bd i-input-input-right" bindchange="handleStylePickChange" range="{{styles}}">
         {{style}}
       </picker>
     </view>
-    <i-input value="{{ value6 }}" type="text" right title="适合人群" mode="wrapped" placeholder="" maxlength="50" bind:change='handlefitGroupChange' />
-    <i-input value="{{ value6 }}" type="text" right title="适合场景" mode="wrapped" placeholder="" maxlength="50" bind:change='handlefitSceneChange' />
-    <i-input value="{{ value6 }}" type="text" right title="方案描述" mode="wrapped" placeholder="" maxlength="200" bind:change='handleDescChange' />
+    <i-input value="{{ fit_group }}" type="text" right title="适合人群" mode="wrapped" placeholder="" maxlength="50" bind:change='handlefitGroupChange' />
+    <i-input value="{{ fit_scene }}" type="text" right title="适合场景" mode="wrapped" placeholder="" maxlength="50" bind:change='handlefitSceneChange' />
+    <i-input value="{{ desc }}" type="text" right title="方案描述" mode="wrapped" placeholder="" maxlength="200" bind:change='handleDescChange' />
   </i-panel>
 </form>
 
-<view class="bottom-btn" bindtap='addItem'>
+<view class="bottom-btn" bindtap="{{planid ? 'updatePlan' : 'savePlan'}}">
   <!-- <navigator class="bottom-navigator"
    url='../canvas/canvas?name={{name}}&style={{style}}&fit_group={{fit_group}}&fit_scene={{fit_scene}}&desc={{desc}}'> -->
-    <view class="r {{btnDisable ? 'disable' : ''}}">添加商品</view>
+    <view class="r {{btnDisable ? 'disable' : ''}}">{{planid ? '更新' : '保存'}}</view>
   <!-- </navigator> -->
 </view>

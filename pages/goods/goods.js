@@ -327,16 +327,31 @@ Page({
 
   },
   addToCanvas: function() {
-    wx.navigateBack({
-      delta: 3
+    wx.showLoading({
+      title: '添加中',
     })
     var pages = getCurrentPages();
     var canvasPage = pages[pages.length - 4];  // -1 当前商品页面 -2 categroy页面 -3 catalog -4 cavas
-    let count = canvasPage.
+    let goodsArr = canvasPage.data.goodsArr
+    for (let i in goodsArr) {
+      if (this.data.goods.id == goodsArr[i].goods_id) {
+        wx.showModal({
+          title: '提示',
+          content: '您已添加过该宝贝',
+          showCancel: false
+        })
+        wx.hideLoading()        
+        return
+      }
+    }
     canvasPage.addGoods({
-      id: this.data.goods.id,
+      goods_id: this.data.goods.id,
       url: this.data.goods.list_pic_url
     })
+    wx.navigateBack({
+      delta: 3
+    })
+    wx.hideLoading()
   },
   cutNumber: function () {
     this.setData({

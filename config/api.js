@@ -65,4 +65,6 @@ module.exports = {
   PlanSave: ApiRootUrl + 'plan/save', // 保存方案
   PlanList: ApiRootUrl + 'plan/list', // 
   PlanSearch: ApiRootUrl + 'plan/search', // 搜索方案
+  PlanGet: ApiRootUrl + 'plan/get', // 搜索方案
+  PlanUpdate: ApiRootUrl + 'plan/update', // 更新方案
 };

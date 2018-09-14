@@ -2,8 +2,8 @@
 <canvas canvas-id='customCanvas' style='width: {{750 * unit}}rpx; height: {{750 * unit}}rpx'></canvas>
 
 <view class="img-container">
-  <image class="img {{ actionBarShow ? 'img-selected' : ''}}" wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' wx:if='{{item.selected}}' data-index='{{index}}' src='{{item.url}}' bindtouchend='ImgTouchEnd' bindlongpress='toggleActionBar'
-    bindtouchstart='ImgTouchStart' bindtouchmove='ImgTouchMove' style='width: {{item.width}}px;height: {{item.height}}px; top: {{item.top}}px; left: {{item.left}}px; z-index: {{item.z}}'></image>
+  <image class="img {{ actionBarShow ? 'img-selected' : ''}}" wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' wx:if='{{item.enabled == 1}}' data-index='{{index}}' src='{{item.url}}' bindtouchend='ImgTouchEnd' bindlongpress='toggleActionBar'
+    bindtouchstart='ImgTouchStart' bindtouchmove='ImgTouchMove' style='width: {{item.w}}px;height: {{item.h}}px; top: {{item.y}}px; left: {{item.x}}px; z-index: {{item.z}}'></image>
 </view>
 
 <view class="action-bar {{actionBarShow ? '.action-bar-show' : ''}}"  wx:if="{{actionBarShow}}">
@@ -36,5 +36,7 @@
 </view>
 
 <view class="bottom-btn">
-  <view class="r {{goodsArr.length == 0 ? 'disable' : ''}}" bindtap="saveCanvas">保存</view>
+  <view class="r {{goodsArr.length == 0 ? 'disable' : ''}}" bindtap="saveCanvas">
+  {{planid ? '更新详情' : '填写详情'}}
+  </view>
 </view>
