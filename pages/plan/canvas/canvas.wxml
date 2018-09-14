@@ -1,11 +1,24 @@
 <!--pages/plan/canvas/canvas.wxml-->
 <canvas canvas-id='customCanvas' style='width: {{750 * unit}}rpx; height: {{750 * unit}}rpx'></canvas>
 
-<view class="img-container"> 
-  <image class='img' wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' 
-  wx:if='{{item.selected}}' data-index='{{index}}'
-  src='{{item.url}}' bindtouchend='ImgTouchEnd'
-  bindtouchmove='ImgTouchMove' style='width: {{item.width}}px;height: {{item.height}}px; top: {{item.top}}px; left: {{item.left}}px;'></image>
+<view class="img-container">
+  <image class="img {{ actionBarShow ? 'img-selected' : ''}}" wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' wx:if='{{item.selected}}' data-index='{{index}}' src='{{item.url}}' bindtouchend='ImgTouchEnd' bindlongpress='toggleActionBar'
+    bindtouchstart='ImgTouchStart' bindtouchmove='ImgTouchMove' style='width: {{item.width}}px;height: {{item.height}}px; top: {{item.top}}px; left: {{item.left}}px; z-index: {{item.z}}'></image>
+</view>
+
+<view class="action-bar {{actionBarShow ? '.action-bar-show' : ''}}"  wx:if="{{actionBarShow}}">
+  <view class="action-bar-item" bindtap="removeFromCanvas">
+    <image class="action-bar-item-icon" src="../../../static/icons/icon_delete.svg"></image>
+    <!-- <view class="action-bar-item-text">删除</view> -->
+  </view>
+  <view class="action-bar-item" bindtap="increaseZ">
+    <image class="action-bar-item-icon" src="../../../static/icons/icon_inc.svg"></image>
+    <!-- <view class="action-bar-item-text">上移</view> -->
+  </view>
+  <view class="action-bar-item" bindtap="decreaseZ">
+    <image class="action-bar-item-icon" src="../../../static/icons/icon_dec.svg"></image>
+    <!-- <view class="action-bar-item-text">下移</view> -->
+  </view>
 </view>
 
 <view class='bottom-control'>
@@ -13,9 +26,12 @@
     <image class='add-btn' src='../../../static/icons/svg_add.svg'></image>
   </navigator>
   <scroll-view class='good-container' scroll-x='true'>
-    <image class='good-thumbnail'
-    wx:for='{{goodsArr}}' wx:key='{{item.id}}' wx:for-index="index" src='{{item.url}}'
-    data-index='{{index}}' bindtap='thumbnailTapped'></image>
+    <view class='good-thumbnail' wx:for='{{goodsArr}}' wx:key='{{item.id}}' wx:for-index="index">
+      <image class='img' src='{{item.url}}' data-index='{{index}}' bindtap='addToCanvas' bindlongpress='toggleRemoveBtn'></image>
+      <view class="btn" wx:if="{{removeBtnShow}}">
+        <image class="remove" src='../../../static/icons/icon_remove.svg' bindtap='removeGoods' data-index='{{index}}'></image>
+      </view>
+    </view>
   </scroll-view>
 </view>
 

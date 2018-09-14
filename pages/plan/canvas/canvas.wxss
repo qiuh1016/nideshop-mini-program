@@ -16,6 +16,7 @@ canvas {
   height: 750rpx;
   border: 1rpx solid #c9c9c9;
   overflow: hidden;
+  position: relative;
   /* background: green; */
 }
 
@@ -23,6 +24,56 @@ canvas {
   position: absolute;
   width: 200rpx;
   height: 200rpx;
+}
+
+.img-selected {
+  /* border: 1rpx solid #408EE2; */
+  box-shadow: 2rpx 5rpx 5rpx 5rpx #aaa;
+}
+
+.action-bar {
+  position: absolute;
+  width: 130rpx;
+  top: 130rpx;
+  left: 0rpx;
+  background: #fff;
+  padding: 0 15rpx 15rpx 15rpx;
+  z-index: 9999;
+  border: 1rpx solid #a5a5a5;
+}
+
+.action-bar-item {
+  width: 100rpx;
+  height: 100rpx;
+  /* height: 120rpx; */
+  /* background: red; */
+  margin-top: 20rpx; 
+}
+
+.action-bar-item-icon {
+  width: 100rpx;
+  height: 100rpx;
+  /* margin-left: 10rpx; */
+}
+
+.action-bar-item-text {
+  width: 100rpx;
+  height: 40rpx;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  text-align: center;
+}
+
+.action-bar-show {
+  animation: actionmoveout 0.7s;
+  -moz-animation: actionmoveout 0.7s;
+  -webkit-animation: actionmoveout 0.7s;
+  -o-animation: actionmoveout 0.7s;
+}
+
+@keyframes actionmoveout {
+  from {left: -100rpx;}
+  to {left: 0rpx;}
 }
 
 .bottom-control {
@@ -47,7 +98,27 @@ canvas {
   width: 180rpx;
   height: 180rpx;
   margin-right: 10rpx;
+  display: inline-block;
+  position: relative;
   /* background: yellow; */
+}
+
+.good-thumbnail .img {
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.good-thumbnail .btn {
+  position: absolute;
+  width: 40rpx;
+  height: 40rpx;
+  right: 0;
+  top: 0;
+}
+
+.good-thumbnail .btn .remove {
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .add-btn {

@@ -20,6 +20,9 @@ Page({
     touchY: 0,
     // canvasHidden: true,
     unit: 0,
+    removeBtnShow: false,
+    actionBarShow: false,
+    canvasGoodsIndex: 0,
   },
 
   /**
@@ -43,62 +46,100 @@ Page({
     // this.getTestData();
   },
 
-  getTestData() {
-    let goodsArr = [{
-        id: 1,
-        url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/i4/82523815/TB1bDJIeiMnBKNjSZFzXXc_qVXa_!!0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 200,
-        picheight: 200,
-        width: 200,
-        height: 200,
-        top: 0,
-        left: 0,
-        scale: 1
-      }, {
-        id: 2,
-        url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i3/3864942132/TB2K_KssyQnBKNjSZFmXXcApVXa_!!3864942132-0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 200,
-        picheight: 200,
-        width: 100,
-        height: 100,
-        top: 0,
-        left: 0,
-        scale: 1
-      }, {
-        id: 3,
-        url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/96416556/TB2bvk2tCtYBeNjSspkXXbU8VXa_!!0-saturn_solar.jpg_360x360Q90.jpg',
-        picwidth: 200,
-        picheight: 200,
-        width: 100,
-        height: 100,
-        top: 0,
-        left: 0,
-        scale: 1
-      }, {
-        id: 4,
-        url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/2055544716/TB2w3tlt29TBuNjy1zbXXXpepXa_!!2055544716-0-item_pic.jpg_360x360Q90.jpg',
-        picwidth: 200,
-        picheight: 200,
-        width: 100,
-        height: 100,
-        top: 0,
-        left: 0,
-        scale: 1
-    }];
 
+  toggleRemoveBtn() {
+    this.setData({
+      removeBtnShow: !this.data.removeBtnShow
+    })
+  },
+
+  toggleActionBar(e) {
+    let index = e.currentTarget.dataset.index;
+    this.setData({
+      actionBarShow: !this.data.actionBarShow,
+      canvasGoodsIndex: index
+    })
+  },
+
+  /**
+   * 商品缩略题点击之后 显示商品到画板，已显示的return
+   */
+  addToCanvas(e) {
+    let index = e.currentTarget.dataset.index;
+    let goodsArr = this.data.goodsArr;
+    if (!goodsArr[index].selected) {
+      goodsArr[index].selected = !goodsArr[index].selected;
+      this.setData({
+        goodsArr: goodsArr,
+      })
+    }
+    this.setData({
+      actionBarShow: false,
+      removeBtnShow: false
+    })
+  },
+
+  removeFromCanvas() {
+    let index = this.data.canvasGoodsIndex;
+    let goodsArr = this.data.goodsArr;
+    goodsArr[index].selected = false;
+    this.setData({
+      goodsArr: goodsArr,
+      actionBarShow: false
+    })
+  },
+
+  increaseZ() {
+    console.log('increaseZ')
+    let index = this.data.canvasGoodsIndex;
+    let goodsArr = this.data.goodsArr;
+    let z = goodsArr[index].z
+    if (z == goodsArr.length - 1) return;
     for (let i in goodsArr) {
       let goods = goodsArr[i];
-      goods.selected = false;
-      this.getImgInfo(goods.url, 'pic'+i);
+      if (goods.z == z + 1) {
+        goods.z = z
+        break
+      }
     }
-
+    goodsArr[index].z = z + 1;
+    console.log(goodsArr)
     this.setData({
-      goodsArr: goodsArr
+      goodsArr: goodsArr,
+    })
+  },
+
+  decreaseZ() {
+    console.log('decreaseZ')
+    let index = this.data.canvasGoodsIndex;
+    let goodsArr = this.data.goodsArr;
+    let z = goodsArr[index].z
+    if (z == 0) return;
+    for (let i in goodsArr) {
+      let goods = goodsArr[i];
+      if (goods.z == z - 1) {
+        goods.z = z
+        break
+      }
+    }
+    goodsArr[index].z = z - 1;
+    console.log(goodsArr)
+    this.setData({
+      goodsArr: goodsArr,
     })
   },
 
   addGoods(goods) {
     let goodsArr = this.data.goodsArr;
+    goods.picwidth = 200;
+    goods.picheight = 200;
+    goods.width = 150;
+    goods.height = 150;
+    goods.top = (this.data.screenWidth - goods.picwidth) / 2;
+    goods.left = (this.data.screenWidth - goods.picheight) / 2;
+    goods.scale = 1;
+    goods.z = goodsArr.length;
+    goods.selected = false;
     goodsArr.push(goods);
     this.getImgInfo(goods.url, `pic${goodsArr.length - 1}`)
     this.setData({
@@ -112,60 +153,25 @@ Page({
     // })
   },
 
+  removeGoods(e) {
+    let index = e.currentTarget.dataset.index;
+    let goodsArr = this.data.goodsArr;
+    goodsArr.splice(index, 1);
+    this.setData({
+      goodsArr: goodsArr
+    })
+  },
+
   getImgInfo(netUrl, storageKeyUrl) {
     let that = this;
     wx.getImageInfo({
       src: netUrl,
-      success: function(res) {
+      success: function (res) {
         wx.setStorage({
           key: storageKeyUrl,
           data: res.path,
         });
       }
-    })
-  },
-
-  ImgTouchMove(e) {
-    let index = e.currentTarget.dataset.index;
-    let goodsArr = this.data.goodsArr;
-    let goods = goodsArr[index];
-    if (e.touches.length == 1) {
-      if (this.data.touchX != 0 || this.data.touchY != 0) {
-        let diffX = e.touches[0].clientX - this.data.touchX;
-        let diffY = e.touches[0].clientY - this.data.touchY;
-        goods.left = goods.left + diffX;
-        goods.top = goods.top + diffY;
-        this.setData({
-          goodsArr: goodsArr
-        })
-      }
-      this.data.touchX = e.touches[0].clientX;
-      this.data.touchY = e.touches[0].clientY;
-    } else {
-      let xMove = e.touches[1].clientX - e.touches[0].clientX;
-      let yMove = e.touches[1].clientY - e.touches[0].clientY;
-      let distance = Math.sqrt(xMove * xMove + yMove * yMove);
-      if (this.data.distance != 0) {
-        let distanceDiff = distance - this.data.distance;
-        let newScale = goods.scale + 0.005 * distanceDiff;
-        if (newScale <= 2 && newScale >= 0.5) {
-          goods.scale = newScale;
-          goods.width = goods.picwidth * goods.scale;
-          goods.height = goods.picheight * goods.scale;
-        }
-      }
-      this.setData({
-        distance: distance,
-        goodsArr: goodsArr
-      })
-    }
-  },
-
-  ImgTouchEnd() {
-    this.setData({
-      distance: 0,
-      touchX: 0,
-      touchY: 0
     })
   },
 
@@ -190,7 +196,7 @@ Page({
         ctx.drawImage(imgurl, goods.left * unit, goods.top * unit, goods.width * unit, goods.height * unit);
       }
     }
-    ctx.draw(false, function() {
+    ctx.draw(false, function () {
       wx.canvasToTempFilePath({
         x: 0,
         y: 0,
@@ -199,7 +205,7 @@ Page({
         destWidth: _this.data.screenWidth * unit,
         destHeight: _this.data.screenWidth * unit,
         canvasId: 'customCanvas',
-        success: function(res) {
+        success: function (res) {
           if (!res.tempFilePath) {
             wx.showModal({
               title: '提示',
@@ -219,7 +225,7 @@ Page({
               fit_group: _this.data.fit_group,
               fit_scene: _this.data.fit_scene,
               desc: _this.data.desc
-            },  
+            },
             success: function (res) {
               console.log(res);
               wx.hideLoading()
@@ -257,15 +263,9 @@ Page({
     });
   },
 
-  thumbnailTapped(e) {
-    let index = e.currentTarget.dataset.index;
-    let goodsArr = this.data.goodsArr;
-    goodsArr[index].selected = !goodsArr[index].selected;
-    this.setData({
-      goodsArr: goodsArr
-    })
-  },
-
+  /**
+   * 将data里的arr转换成上传用的arr，减少不必要的数据
+   */
   getGoodsJsonArr(goodsArr) {
     let arr = [];
     for (let i in goodsArr) {
@@ -274,12 +274,66 @@ Page({
         id: goods.id,
         x: goods.left,
         y: goods.top,
+        z: goods.z,
         w: goods.width,
         h: goods.height,
         enable: goods.selected ? 1 : 0
       })
     }
     return arr;
+  },
+
+  ImgTouchStart() {
+    this.setData({
+      actionBarShow: false
+    })
+  },
+
+  ImgTouchMove(e) {
+    let clientX = e.touches[0].clientX
+    let clientY = e.touches[0].clientY
+    if (clientX > this.data.screenWidth || clientY > this.data.screenWidth) return;
+    let index = e.currentTarget.dataset.index;
+    let goodsArr = this.data.goodsArr;
+    let goods = goodsArr[index];
+    if (e.touches.length == 1) {
+      if (this.data.touchX != 0 || this.data.touchY != 0) {
+        let diffX = clientX - this.data.touchX;
+        let diffY = clientY - this.data.touchY;
+        goods.left = goods.left + diffX;
+        goods.top = goods.top + diffY;
+        this.setData({
+          goodsArr: goodsArr
+        })
+      }
+      this.data.touchX = e.touches[0].clientX;
+      this.data.touchY = e.touches[0].clientY;
+    } else {
+      let xMove = e.touches[1].clientX - e.touches[0].clientX;
+      let yMove = e.touches[1].clientY - e.touches[0].clientY;
+      let distance = Math.sqrt(xMove * xMove + yMove * yMove);
+      if (this.data.distance != 0) {
+        let distanceDiff = distance - this.data.distance;
+        let newScale = goods.scale + 0.005 * distanceDiff;
+        if (newScale <= 2 && newScale >= 0.5) {
+          goods.scale = newScale;
+          goods.width = goods.picwidth * goods.scale;
+          goods.height = goods.picheight * goods.scale;
+        }
+      }
+      this.setData({
+        distance: distance,
+        goodsArr: goodsArr
+      })
+    }
+  },
+
+  ImgTouchEnd() {
+    this.setData({
+      distance: 0,
+      touchX: 0,
+      touchY: 0
+    })
   },
 
   /**
@@ -329,5 +383,31 @@ Page({
    */
   onShareAppMessage: function() {
 
-  }
+  },
+
+  /**
+   * 模拟数据
+   */
+  getTestData() {
+    let goodsTestArr = [{
+      id: 1,
+      url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/i4/82523815/TB1bDJIeiMnBKNjSZFzXXc_qVXa_!!0-item_pic.jpg_360x360Q90.jpg',
+    }, {
+      id: 2,
+      url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i3/3864942132/TB2K_KssyQnBKNjSZFmXXcApVXa_!!3864942132-0-item_pic.jpg_360x360Q90.jpg'
+    }, {
+      id: 3,
+      url: 'https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/96416556/TB2bvk2tCtYBeNjSspkXXbU8VXa_!!0-saturn_solar.jpg_360x360Q90.jpg'
+    }, {
+      id: 4,
+      url: 'https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/2055544716/TB2w3tlt29TBuNjy1zbXXXpepXa_!!2055544716-0-item_pic.jpg_360x360Q90.jpg'
+    }];
+
+    let goodsArr = this.data.goodsArr;
+    for (let i in goodsTestArr) {
+      let goods = goodsTestArr[i];
+      this.addGoods(goods);
+      this.getImgInfo(goods.url, 'pic' + i);
+    }
+  },
 })

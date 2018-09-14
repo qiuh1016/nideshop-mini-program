@@ -332,16 +332,10 @@ Page({
     })
     var pages = getCurrentPages();
     var canvasPage = pages[pages.length - 4];  // -1 当前商品页面 -2 categroy页面 -3 catalog -4 cavas
+    let count = canvasPage.
     canvasPage.addGoods({
       id: this.data.goods.id,
-      url: this.data.goods.list_pic_url,
-      picwidth: 200,
-      picheight: 200,
-      width: 150,
-      height: 150,
-      top: 0,
-      left: 0,
-      scale: 1
+      url: this.data.goods.list_pic_url
     })
   },
   cutNumber: function () {
