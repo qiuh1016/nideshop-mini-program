@@ -1,0 +1,29 @@
+/* pages/plan/detail/detail.wxss */
+@import "../../../lib/mycss/plan";
+@import "../../../lib/mycss/common";
+
+.plan-pic {
+  margin: 0 100rpx 0 100rpx;
+  width: 550rpx;
+  height: 550rpx;
+}
+
+.style-item-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.item-price {
+  width: 100%;
+  color: red;
+  bottom: 10rpx;
+  position: absolute;
+  text-align: center;  
+}
+
+.item-checkbox {
+  position: absolute;  
+  top: 10rpx;
+  left: 10rpx;
+}

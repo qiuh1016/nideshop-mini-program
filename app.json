@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/plan/list/list",
     "pages/index/index",
     "pages/catalog/catalog",
     "pages/catalog/forplan/catalog",
@@ -35,8 +36,8 @@
     "pages/goods/goods",
     "pages/topicDetail/topicDetail",
     "pages/plan/add/add",
-    "pages/plan/list/list",
     "pages/plan/canvas/canvas",
+    "pages/plan/detail/detail",
     "pages/stylist/detail/detail"
   ],
   "window": {

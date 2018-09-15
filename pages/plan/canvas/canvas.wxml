@@ -2,7 +2,7 @@
 <canvas canvas-id='customCanvas' style='width: {{750 * unit}}rpx; height: {{750 * unit}}rpx'></canvas>
 
 <view class="img-container">
-  <image class="img {{ actionBarShow ? 'img-selected' : ''}}" wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' wx:if='{{item.enabled == 1}}' data-index='{{index}}' src='{{item.url}}' bindtouchend='ImgTouchEnd' bindlongpress='toggleActionBar'
+  <image class="img {{ canvasGoodsIndex == index && actionBarShow ? 'img-selected' : ''}}" wx:for='{{goodsArr}}' wx:for-index="index" wx:key='{{item.id}}' wx:if='{{item.enabled == 1}}' data-index='{{index}}' src='{{item.url}}' bindtouchend='ImgTouchEnd' bindlongpress='toggleActionBar'
     bindtouchstart='ImgTouchStart' bindtouchmove='ImgTouchMove' style='width: {{item.w}}px;height: {{item.h}}px; top: {{item.y}}px; left: {{item.x}}px; z-index: {{item.z}}'></image>
 </view>
 

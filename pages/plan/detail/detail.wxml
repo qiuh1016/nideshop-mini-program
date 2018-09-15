@@ -1,0 +1,20 @@
+<!--pages/plan/detail/detail.wxml-->
+<image class="plan-pic" src="{{planDetail.image_url}}"></image>
+
+<view class="style-grid">
+  <view class="style-item" wx:for="{{goodsArr}}" wx:key="item.id" wx:index="index"
+  bindtap="itemTapped" data-planid="{{item.id}}" data-index="{{index}}"
+  style="height: 395rpx;">
+    <image class="style-item-img" src="{{item.url}}"></image>
+    <text class="style-item-text" style="margin-bottom: 40rpx;">{{item.name}}</text>
+    <text class="item-price">¥{{item.retail_price}}</text>
+    <checkbox class="item-checkbox" checked="{{item.checked}}" data-index="{{index}}"
+    wx:if="{{forCustomer}}"/>
+  </view>
+</view>
+
+<view style='height: 150rpx;'></view>
+
+<view class="bottom-btn">
+  <view class="r" bindtap='bottomBtnTapped'>{{forCustomer ? '下单': '修改'}}</view>
+</view>

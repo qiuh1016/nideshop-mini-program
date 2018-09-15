@@ -5,7 +5,7 @@
 
 .style-btns {
   display: flex;
-  padding: 0 150rpx;
+  padding: 0 60rpx;
 }
 
 .style-btn {
@@ -29,10 +29,11 @@
 }
 
 .style-btn-middle {
-  margin: 0 8rpx;
+  margin-left: 10rpx;
 }
 
 .style-btn-last {
+  margin-left: 10rpx;  
   border-top-right-radius: 15rpx;
   border-bottom-right-radius: 15rpx;
 }

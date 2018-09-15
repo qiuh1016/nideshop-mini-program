@@ -11,7 +11,7 @@ Page({
     stylist_id: 1,
     styles: ['简约', '休闲', '轻时尚'],
     stylePlans: [], // 搭配方案
-    currentStyleBtnIndex: 0, // 当前风格按钮index
+    currentStyleBtnIndex: -1, // 当前风格按钮index
     keyword: '',
     showSearchResult: false, // 显示搜索结果的时候 把 tab隐藏
   },
@@ -33,7 +33,7 @@ Page({
     let that = this;
     util.request(api.PlanList, {
         stylist_id: this.data.stylist_id,
-        style: this.data.styles[this.data.currentStyleBtnIndex]
+        style_id: this.data.currentStyleBtnIndex
       })
       .then(function(res) {
         if (res.errno === 0) {
@@ -117,6 +117,13 @@ Page({
       currentStyleBtnIndex: e.currentTarget.dataset.index,
     })
     this.getPlanDataByStyle();
+  },
+
+  enterPlanDetail(e) {
+    let planid = e.currentTarget.dataset.planid;
+    wx.navigateTo({
+      url: `../detail/detail?planid=${planid}&forCustomer=0`,
+    })
   },
 
   editPlan(e) {
