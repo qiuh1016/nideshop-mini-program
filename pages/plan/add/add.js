@@ -51,7 +51,6 @@ Page({
     this.setData({
       tempFilePath: options.tempFilePath
     });
-    console.log(this.data.add_time);
   },
 
   handleNameChange({ detail = {} }) {

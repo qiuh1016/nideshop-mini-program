@@ -72,12 +72,14 @@ Page({
             })
           } else {
             let goodsArr = res.data.items;
+            for (let i in goodsArr) {
+              let goods = goodsArr[i];
+              that.getImgInfo(goods.url, `pic${i}`)
+            }
             that.setData({
               planDetail: res.data.plan,
               goodsArr: res.data.items
             });
-
-            console.log(res.data.items)
           }
         }
         wx.hideLoading()
