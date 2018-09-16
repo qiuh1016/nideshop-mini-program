@@ -14,7 +14,7 @@ Page({
     fit_group: '',
     fit_scene: '',
     desc: '',
-    add_time: '',
+    v: '',
     tempFilePath: '',
     btnDisable: true,
   },
@@ -30,7 +30,6 @@ Page({
       let pages = getCurrentPages();
       let canvasPage = pages[pages.length - 2];
       let planDetail = canvasPage.data.planDetail;
-      console.log(planDetail)
       this.setData({
         planid: planid,
         name: planDetail.name,
@@ -38,7 +37,7 @@ Page({
         fit_group: planDetail.fit_group,
         fit_scene: planDetail.fit_scene,
         desc: planDetail.desc,
-        add_time: planDetail.add_time
+        v: planDetail.v
       })
       this.checkBtnValidation();
     }
@@ -161,7 +160,7 @@ Page({
         fit_scene: _this.data.fit_scene,
         desc: _this.data.desc,
         id: _this.data.planid,
-        add_time: _this.data.add_time
+        v: _this.data.v
       },
       success: function (res) {
         console.log(res);

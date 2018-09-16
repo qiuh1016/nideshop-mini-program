@@ -14,7 +14,7 @@
   </view>
   <view class="style-grid" style="margin-bottom: 110rpx;">
     <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id" wx:index="index">
-      <image class="style-item-img" src="{{item.image_url}}"
+      <image class="style-item-img" src="{{cdnImgUrl}}{{item.id}}.png?v={{item.v}}"
       data-planid="{{item.id}}" data-index="{{index}}"
       bindtap="enterPlanDetail" bindlongpress="planLongPressed"></image>
       <text class="style-item-text">{{item.name}}</text>

@@ -1,5 +1,5 @@
 <!--pages/plan/detail/detail.wxml-->
-<image class="plan-pic" src="{{planDetail.image_url}}"></image>
+<image class="plan-pic" src="{{cdnImgUrl}}{{planDetail.id}}.png?v={{planDetail.v}}"></image>
 
 <view class="style-grid">
   <view class="style-item" wx:for="{{goodsArr}}" wx:key="item.id" wx:index="index"

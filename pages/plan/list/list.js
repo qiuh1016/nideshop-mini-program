@@ -15,12 +15,16 @@ Page({
     keyword: '',
     showSearchResult: false, // 显示搜索结果的时候 把 tab隐藏
     editRowIndex: -1, // 编辑条目前所在的方案index，-1则都不显示
+    cdnImgUrl: ''
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad: function(options) {
+    this.setData({
+      cdnImgUrl: api.cdnImgUrl
+    })
     wx.setNavigationBarTitle({
       title: '方案库'
     })

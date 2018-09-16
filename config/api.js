@@ -1,7 +1,10 @@
 // const ApiRootUrl = 'http://39.104.85.163:8360/api/';
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
+const cdnImgUrl = 'http://cdn.youjianmishi.cn/img/plan/';
 
 module.exports = {
+  cdnImgUrl: cdnImgUrl,
+  
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'catalog/index',  //分类目录全部分类数据接口
   CatalogCurrent: ApiRootUrl + 'catalog/current',  //分类目录当前分类数据接口
