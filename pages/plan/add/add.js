@@ -167,7 +167,7 @@ Page({
         wx.hideLoading()
         if (res.statusCode === 200) {
           let planListPage = pages[pages.length - 4]
-          planListPage.getPlanDataByStyle()
+          planListPage.onPullDownRefresh();
           let planDetailPage = pages[pages.length - 3]
           planDetailPage.getPlanDetail(planDetailPage.data.planDetail.id);
           wx.navigateBack({

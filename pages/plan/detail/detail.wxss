@@ -12,12 +12,21 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 0 30rpx;
+  margin-bottom: 70rpx;
+}
+
+.style-item-img {
+  width: 215rpx;
+  height: 215rpx;
+  left: 80rpx;
+  top: 40rpx;
 }
 
 .item-price {
   width: 100%;
   color: red;
-  bottom: 10rpx;
+  bottom: 40rpx;
   position: absolute;
   text-align: center;  
 }

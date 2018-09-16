@@ -15,7 +15,8 @@ Page({
     keyword: '',
     showSearchResult: false, // 显示搜索结果的时候 把 tab隐藏
     editRowIndex: -1, // 编辑条目前所在的方案index，-1则都不显示
-    cdnImgUrl: ''
+    cdnImgUrl: '',
+    page: 1,
   },
 
   /**
@@ -28,68 +29,81 @@ Page({
     wx.setNavigationBarTitle({
       title: '方案库'
     })
-    this.getPlanDataByStyle();
+    if (this.data.keyword == '') {
+      this.getPlanDataByStyle();
+    } else {
+      this.getPlanDataByKeyword();
+    }
+  },
+
+  searchBtnTapped() {
+    this.setData({
+      page: 0,
+      stylePlans: []
+    })
+    let keyword = this.data.keyword;
+    if (keyword == '') {
+      this.getPlanDataByStyle();
+    } else {
+      this.getPlanDataByKeyword()
+    }
   },
 
   getPlanDataByStyle() {
-    wx.showLoading({
-      title: '加载中...',
-    })
+    // wx.showLoading({
+    //   title: '加载中...',
+    // })
     let that = this;
     util.request(api.PlanList, {
         stylist_id: this.data.stylist_id,
-        style_id: this.data.currentStyleBtnIndex
+        style_id: this.data.currentStyleBtnIndex,
+        page: this.data.page
       })
       .then(function(res) {
         if (res.errno === 0) {
-          that.setData({
-            stylePlans: [],
-          })
-          that.setData({
-            stylePlans: res.data,
-            showSearchResult: false
-          });
+          if (res.data.length != 0) {
+            let stylePlans = that.data.stylePlans;
+            stylePlans = stylePlans.concat(res.data);
+            that.setData({
+              stylePlans: stylePlans,
+              showSearchResult: false,
+              page: that.data.page + 1
+            });
+          }
+          wx.stopPullDownRefresh()
         }
-        wx.hideLoading()
+        // wx.hideLoading()
       });
   },
 
   getPlanDataByKeyword() {
-    let keyword = this.data.keyword;
-    if (keyword == '') {
-      this.getPlanDataByStyle();
-      this.setData({
-        showSearchResult: false
-      })
-      return;
-    }
-
-    wx.showLoading({
-      title: '加载中...',
-    })
-
+    // wx.showLoading({
+    //   title: '加载中...',
+    // })
     let that = this;
     util.request(api.PlanSearch, {
         stylist_id: this.data.stylist_id,
-        keyword: keyword
+        keyword: this.data.keyword,
+        page: this.data.page + 1
       })
       .then(function(res) {
         if (res.errno === 0) {
-          if (res.data.length == 0) {
-            wx.showModal({
-              title: '提示',
-              content: '未找到相关方案',
-              showCancel: false
-            })
+          if (res.data.length != 0) {
+            let stylePlans = that.data.stylePlans;
+            stylePlans = stylePlans.concat(res.data);
+            that.setData({
+              stylePlans: stylePlans,
+              showSearchResult: true,
+              page: that.data.page + 1
+            });
           } else {
             that.setData({
-              stylePlans: res.data,
-              showSearchResult: true
-
+              showSearchResult: true,
             });
           }
         }
-        wx.hideLoading()
+        wx.stopPullDownRefresh()
+        // wx.hideLoading()
       });
   },
 
@@ -120,14 +134,30 @@ Page({
   styleBtnTapped(e) {
     this.setData({
       currentStyleBtnIndex: e.currentTarget.dataset.index,
+      page: 0,
+      stylePlans: []
     })
     this.getPlanDataByStyle();
   },
 
-  enterPlanDetail(e) {
-    let planid = e.currentTarget.dataset.planid;
+  itemTapped(e) {
+    let index = e.currentTarget.dataset.index;
+    if (index == this.data.editRowIndex) {
+      this.setData({
+        editRowIndex: -1
+      })
+    } else {
+      let planid = e.currentTarget.dataset.planid;
+      this.enterPlanDetail(planid);
+    }
+  },
+
+  enterPlanDetail(planid) {
     wx.navigateTo({
       url: `../detail/detail?planid=${planid}&forCustomer=0`,
+    })
+    this.setData({
+      editRowIndex: -1
     })
   },
 
@@ -156,9 +186,7 @@ Page({
     let planid = plan.id
     util.request(api.PlanCopy, { planid }).then((res) => {
       if (res.errno === 0) {
-        let newPlan = plan
-        newPlan.id = res.data.data;
-        stylePlans.push(newPlan)
+        stylePlans.splice(0, 0, res.data);
         this.setData({
           stylePlans: stylePlans,
           editRowIndex: -1
@@ -187,6 +215,7 @@ Page({
       wx.hideLoading()
     })
   },
+
   /**
    * Lifecycle function--Called when page is initially rendered
    */
@@ -219,14 +248,25 @@ Page({
    * Page event handler function--Called when user drop down
    */
   onPullDownRefresh: function() {
-
+    console.log('onPullDownRefresh')
+    this.setData({
+      page: 0,
+      stylePlans: []
+    })
+    this.onLoad();
   },
 
   /**
    * Called when page reach bottom
    */
   onReachBottom: function() {
-
+    console.log('onReachBottom')
+    let keyword = this.data.keyword;
+    if (keyword == '') {
+      this.getPlanDataByStyle()
+    } else {
+      this.getPlanDataByKeyword()
+    }
   },
 
   /**

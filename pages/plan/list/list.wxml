@@ -1,7 +1,8 @@
 <!--pages/plan/list/list.wxml-->
+<view>
 <view class="search">
   <input class="search-input" placeholder="请输入方案名称" placeholder-class="phcolor" bindinput="getKeyword"></input>
-  <view class="search-btn" bindtap='getPlanDataByKeyword'>搜索</view>
+  <view class="search-btn" bindtap='searchBtnTapped'>搜索</view>
 </view>
 
 <view class="style">
@@ -16,7 +17,7 @@
     <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id" wx:index="index">
       <image class="style-item-img" src="{{cdnImgUrl}}{{item.id}}.png?v={{item.v}}"
       data-planid="{{item.id}}" data-index="{{index}}"
-      bindtap="enterPlanDetail" bindlongpress="planLongPressed"></image>
+      bindtap="itemTapped" bindlongpress="planLongPressed"></image>
       <text class="style-item-text">{{item.name}}</text>
       <view class="edit-row" wx:if="{{editRowIndex == index}}">
         <view class='edit-row-btn' bindtap='copyPlan'>
@@ -36,4 +37,5 @@
   <navigator class="bottom-navigator" url="../canvas/canvas?style={{styles[currentStyleBtnIndex]}}">
     <view class="r">制作新方案</view>
   </navigator>
+</view>
 </view>
