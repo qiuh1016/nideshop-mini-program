@@ -74,6 +74,9 @@ Page({
             let goodsArr = res.data.items;
             for (let i in goodsArr) {
               let goods = goodsArr[i];
+              goods.scale = 1;
+              goods.picwidth = goods.w;
+              goods.picheight = goods.h;
               that.getImgInfo(goods.url, `pic${i}`)
             }
             that.setData({
@@ -180,6 +183,7 @@ Page({
     goods.scale = 1;
     goods.z = goodsArr.length;
     goods.enabled = 0;
+    goods.scale = 1;
     goodsArr.push(goods);
     this.getImgInfo(goods.url, `pic${goodsArr.length - 1}`)
     this.setData({
@@ -345,10 +349,11 @@ Page({
       if (this.data.distance != 0) {
         let distanceDiff = distance - this.data.distance;
         let newScale = goods.scale + 0.005 * distanceDiff;
+        console.log(newScale);
         if (newScale <= 2 && newScale >= 0.5) {
           goods.scale = newScale;
-          goods.w = goods.picwidth * goods.scale;
-          goods.h = goods.picheight * goods.scale;
+          goods.w = goods.picwidth * newScale;
+          goods.h = goods.picheight * newScale;
         }
       }
       this.setData({
