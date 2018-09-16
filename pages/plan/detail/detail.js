@@ -110,7 +110,7 @@ Page({
       }
     } else {
       wx.navigateTo({
-        url: '../canvas/canvas?planid={{this.data.planDetail.id}}',
+        url: `../canvas/canvas?planid=${this.data.planDetail.id}`,
       })
     }
   },

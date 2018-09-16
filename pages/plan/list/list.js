@@ -14,6 +14,7 @@ Page({
     currentStyleBtnIndex: -1, // 当前风格按钮index
     keyword: '',
     showSearchResult: false, // 显示搜索结果的时候 把 tab隐藏
+    editRowIndex: -1, // 编辑条目前所在的方案index，-1则都不显示
   },
 
   /**
@@ -130,6 +131,56 @@ Page({
     let planid = e.currentTarget.dataset.planid;
     wx.navigateTo({
       url: `../canvas/canvas?planid=${planid}`,
+    })
+  },
+
+  planLongPressed(e) {
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      editRowIndex: this.data.editRowIndex == index ? -1 : index
+    })
+  },
+
+  copyPlan() {
+    let index = this.data.editRowIndex
+    if (index == -1) return
+    wx.showLoading({
+      title: '复制中...',
+    })
+    let stylePlans = this.data.stylePlans
+    let plan = stylePlans[index];
+    let planid = plan.id
+    util.request(api.PlanCopy, { planid }).then((res) => {
+      if (res.errno === 0) {
+        let newPlan = plan
+        newPlan.id = res.data.data;
+        stylePlans.push(newPlan)
+        this.setData({
+          stylePlans: stylePlans,
+          editRowIndex: -1
+        })
+      }
+      wx.hideLoading()
+    })
+  },
+
+  deletePlan() {
+    let index = this.data.editRowIndex
+    if (index == -1) return
+    wx.showLoading({
+      title: '删除中...',
+    })
+    let stylePlans = this.data.stylePlans
+    let planid = stylePlans[index].id
+    util.request(api.PlanDelete, { planid }).then((res) => {
+      if (res.errno === 0) {
+        stylePlans.splice(index, 1);
+        this.setData({
+          stylePlans: stylePlans,
+          editRowIndex: -1
+        })
+      }
+      wx.hideLoading()
     })
   },
   /**

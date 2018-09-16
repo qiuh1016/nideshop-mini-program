@@ -24,7 +24,7 @@ Page({
    */
   onLoad: function(options) {
     let planid = options.planid;
-    let style = options.style;
+    let style = options.style == '' ? this.data.styles[0] : options.style ;
     // 有planid 就是修改 没有就是新建
     if (planid) {
       let pages = getCurrentPages();
@@ -167,8 +167,10 @@ Page({
         console.log(res);
         wx.hideLoading()
         if (res.statusCode === 200) {
-          let planListPage = pages[pages.length - 3];
-          planListPage.getPlanDataByStyle();
+          let planListPage = pages[pages.length - 4]
+          planListPage.getPlanDataByStyle()
+          let planDetailPage = pages[pages.length - 3]
+          planDetailPage.getPlanDetail(planDetailPage.data.planDetail.id);
           wx.navigateBack({
             delta: 2
           })

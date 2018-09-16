@@ -45,3 +45,29 @@ page {
   color: #408ee2;
   text-align: center;
 }
+
+.edit-row {
+  position: absolute;
+  height: 80rpx;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+}
+
+.edit-row-btn {
+  flex: 1;
+  height: 100%;
+  text-align: center;
+  background: #408EE2;  
+}
+
+.edit-row-btn-2nd {
+  border-left: 1rpx solid #fff;
+}
+
+.edit-row-btn .text {
+  line-height: 80rpx;
+  color: #fff;
+}

@@ -13,10 +13,19 @@
     <view class="style-btn style-btn-last {{currentStyleBtnIndex == 2 ? 'style-btn-active' : ''}}" bindtap="styleBtnTapped" data-index="2">{{styles[2]}}</view>
   </view>
   <view class="style-grid" style="margin-bottom: 110rpx;">
-    <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id"
-    bindtap="enterPlanDetail" data-planid="{{item.id}}">
-      <image class="style-item-img" src="{{item.image_url}}"></image>
+    <view class="style-item" wx:for="{{stylePlans}}" wx:key="item.id" wx:index="index">
+      <image class="style-item-img" src="{{item.image_url}}"
+      data-planid="{{item.id}}" data-index="{{index}}"
+      bindtap="enterPlanDetail" bindlongpress="planLongPressed"></image>
       <text class="style-item-text">{{item.name}}</text>
+      <view class="edit-row" wx:if="{{editRowIndex == index}}">
+        <view class='edit-row-btn' bindtap='copyPlan'>
+          <text class='text'>复制</text>
+        </view>
+        <view class='edit-row-btn edit-row-btn-2nd' bindtap='deletePlan'>
+          <text class='text'>删除</text>
+        </view>
+      </view>
     </view>
   </view>
 </view>
