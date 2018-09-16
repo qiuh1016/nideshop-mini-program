@@ -3,9 +3,15 @@
 @import "../../../lib/mycss/common";
 
 .plan-pic {
-  margin: 0 100rpx 0 100rpx;
+  margin: 0 100rpx 150rpx 100rpx;
   width: 550rpx;
   height: 550rpx;
+}
+
+.goods-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  padding-left: 20rpx;
 }
 
 .style-item-text {
@@ -13,20 +19,29 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   padding: 0 30rpx;
-  margin-bottom: 70rpx;
+  margin-bottom: 50rpx;
 }
 
 .style-item-img {
-  width: 215rpx;
-  height: 215rpx;
-  left: 80rpx;
-  top: 40rpx;
+  width: 275rpx;
+  height: 275rpx;
+  left: 50rpx;
+  top: 20rpx;
+  overflow: hidden;
+}
+
+.style-item-img .img{
+  position: absolute;
+  width: 375rpx;
+  height: 375rpx;
+  left: -50rpx;
+  top: -50rpx;
 }
 
 .item-price {
   width: 100%;
   color: red;
-  bottom: 40rpx;
+  bottom: 20rpx;
   position: absolute;
   text-align: center;  
 }
