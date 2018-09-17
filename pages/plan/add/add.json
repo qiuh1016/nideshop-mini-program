@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "方案制作",
+  "enablePullDownRefresh": false,
   "usingComponents": {
     "i-input": "../../../lib/iView/input/index",
     "i-button": "../../../lib/iView/button/index",

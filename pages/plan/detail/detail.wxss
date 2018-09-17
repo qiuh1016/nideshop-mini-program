@@ -3,7 +3,7 @@
 @import "../../../lib/mycss/common";
 
 .plan-pic {
-  margin: 0 100rpx 150rpx 100rpx;
+  margin: 0 100rpx 250rpx 100rpx;
   width: 550rpx;
   height: 550rpx;
 }
