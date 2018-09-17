@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_dec_scale</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="80" height="80" rx="6"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="80" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-325.000000, -233.000000)">
+            <g id="Group-2" transform="translate(325.000000, 233.000000)">
+                <use id="Rectangle-4" stroke="#979797" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+                <path d="M47.5026884,19.7473607 C48.6680726,18.5703777 50.5581961,18.5710952 51.7228104,19.7473607 L72.0021705,40.2296025 C73.1674953,41.4065855 72.7761334,42.3607188 71.1207694,42.3607188 L28.1035859,42.3607188 C26.4514768,42.3607188 26.0576188,41.405868 27.2222926,40.2296025 L47.5026884,19.7473607 Z" id="Rectangle" fill="#979797" transform="translate(49.612806, 30.612806) rotate(225.000000) translate(-49.612806, -30.612806) "></path>
+                <path d="M26.5026884,39.7473607 C27.6680726,38.5703777 29.5581961,38.5710952 30.7228104,39.7473607 L51.0021705,60.2296025 C52.1674953,61.4065855 51.7761334,62.3607188 50.1207694,62.3607188 L7.10358592,62.3607188 C5.45147675,62.3607188 5.05761875,61.405868 6.22229256,60.2296025 L26.5026884,39.7473607 Z" id="Rectangle" fill="#979797" transform="translate(28.612806, 50.612806) rotate(45.000000) translate(-28.612806, -50.612806) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

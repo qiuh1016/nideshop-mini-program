@@ -34,7 +34,7 @@ canvas {
 .action-bar {
   position: absolute;
   width: 130rpx;
-  top: 130rpx;
+  top: 66rpx;
   left: 0rpx;
   background: #fff;
   padding: 0 15rpx 15rpx 15rpx;

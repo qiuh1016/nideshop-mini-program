@@ -19,6 +19,14 @@
     <image class="action-bar-item-icon" src="../../../static/icons/icon_dec.svg"></image>
     <!-- <view class="action-bar-item-text">下移</view> -->
   </view>
+  <view class="action-bar-item" bindtap="increaseScale">
+    <image class="action-bar-item-icon" src="../../../static/icons/icon_inc_scale.svg"></image>
+    <!-- <view class="action-bar-item-text">放大</view> -->
+  </view>
+  <view class="action-bar-item" bindtap="decreaseScale">
+    <image class="action-bar-item-icon" src="../../../static/icons/icon_dec_scale.svg"></image>
+    <!-- <view class="action-bar-item-text">缩小</view> -->
+  </view>
 </view>
 
 <view class='bottom-control'>

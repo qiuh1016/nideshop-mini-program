@@ -132,7 +132,6 @@ Page({
   },
 
   increaseZ() {
-    console.log('increaseZ')
     let index = this.data.canvasGoodsIndex;
     let goodsArr = this.data.goodsArr;
     let z = goodsArr[index].z
@@ -152,7 +151,6 @@ Page({
   },
 
   decreaseZ() {
-    console.log('decreaseZ')
     let index = this.data.canvasGoodsIndex;
     let goodsArr = this.data.goodsArr;
     let z = goodsArr[index].z
@@ -166,6 +164,41 @@ Page({
     }
     goodsArr[index].z = z - 1;
     console.log(goodsArr)
+    this.setData({
+      goodsArr: goodsArr,
+    })
+  },
+
+  increaseScale() {
+    console.log('increaseScale')
+    let index = this.data.canvasGoodsIndex
+    let goodsArr = this.data.goodsArr
+    let goods = goodsArr[index]
+    let newScale = goods.scale * 1.05
+    // if (newScale > 2) return
+    goods.scale = newScale
+    goods.w = goods.picwidth * newScale
+    goods.h = goods.picheight * newScale
+    goods.x = goods.x - goods.picwidth * 0.025
+    goods.y = goods.y - goods.picheight * 0.025
+    console.log(goods.scale);
+    this.setData({
+      goodsArr: goodsArr,
+    })
+  },
+
+  decreaseScale() {
+    console.log('decreaseScale')
+    let index = this.data.canvasGoodsIndex
+    let goodsArr = this.data.goodsArr
+    let goods = goodsArr[index]
+    let newScale = goods.scale * 0.95
+    // if (newScale < 0.5) return
+    goods.scale = newScale
+    goods.w = goods.picwidth * newScale
+    goods.h = goods.picheight * newScale
+    goods.x = goods.x + goods.picwidth * 0.025
+    goods.y = goods.y + goods.picheight * 0.025
     this.setData({
       goodsArr: goodsArr,
     })
@@ -348,13 +381,15 @@ Page({
       let distance = Math.sqrt(xMove * xMove + yMove * yMove);
       if (this.data.distance != 0) {
         let distanceDiff = distance - this.data.distance;
-        let newScale = goods.scale + 0.005 * distanceDiff;
-        console.log(newScale);
-        if (newScale <= 2 && newScale >= 0.5) {
-          goods.scale = newScale;
-          goods.w = goods.picwidth * newScale;
-          goods.h = goods.picheight * newScale;
-        }
+        let diffScale = 0.005 * distanceDiff;
+        let newScale = goods.scale + diffScale;
+        // if (newScale > 2 || newScale < 0.5) {
+        goods.scale = newScale;
+        goods.w = goods.picwidth * newScale;
+        goods.h = goods.picheight * newScale;
+        goods.x = goods.x - goods.picwidth * diffScale / 2
+        goods.y = goods.y - goods.picheight * diffScale / 2
+        // }
       }
       this.setData({
         distance: distance,
